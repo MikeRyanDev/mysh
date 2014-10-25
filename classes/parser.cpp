@@ -9,19 +9,24 @@
 using namespace std;
 
 Parser::Parser(string cmdBlock, Commander &commands){
-	regex parserRegex("[^\\s]+");
+	// // Capturing regex. Matches all words
+	// regex parserRegex("[^\\s]+");
 
-	auto begin = sregex_iterator(cmdBlock.begin(), cmdBlock.end(), parserRegex);
-	auto end = sregex_iterator();
+	// // Regex iterators
+	// auto begin = sregex_iterator(cmdBlock.begin(), cmdBlock.end(), parserRegex);
+	// auto end = sregex_iterator();
 
-	for(sregex_iterator i = begin; i != end; ++i)
-	{
-		smatch match = *i;
-		this->cmdQueue.push(match.str());
-	}
+	// // Go thring cmdBlock and add each word to the queue
+	// for(sregex_iterator i = begin; i != end; ++i)
+	// {
+	// 	smatch match = *i;
+	// 	this->cmdQueue.push(match.str());
+	// }
 
-	this->resolveQueue();
+	// // Resolve the queue by building out cmdName, cmdArgs, and cmdFlags
+	// this->resolveQueue();
 
+	// Try to resolve the command from the cmd IOC
 	try{
 		this->command = commands->resolve( this->cmdName, this->cmdArgs, this->cmdFlags );
 	}
