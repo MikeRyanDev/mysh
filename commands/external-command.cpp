@@ -71,6 +71,7 @@ string getArgs(){
 
 string getFlags(){
 	//gets all flags into a single string	
+	string fs;
 	if(_flags.empty()) return "";
 
 	//I'm assuming flags look like "-a" or "-flag"
