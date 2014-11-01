@@ -9,7 +9,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#inlcude <cstring>
+#include <cstring>
 #include <unistd.h> /*for fork*/
 #include <sys/types.h> /*for pid_t*/
 #include <sys/wait.h> /*for wait*/
