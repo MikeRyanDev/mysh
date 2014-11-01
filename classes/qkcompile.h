@@ -24,8 +24,6 @@ private:
 	string base_name;	// file name without the extension
 	string all_args;	//string containing all arguments seperated by whitespace
 	string all_flags;	//string containing all arguments seperated by whitespace
-	vector<string> vec_args; //vector containing the passed arguments 
-	vector<char> vec_flgs;	//vector containing the passed flags
 
 	string get_args(vector<string> arguments); //gathers all arguments into one string
 	string get_flgs(vector<char> flags); //gathers all arguments into one string
