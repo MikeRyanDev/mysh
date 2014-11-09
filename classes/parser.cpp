@@ -11,7 +11,7 @@ Parser::Parser(string cmdBlock, Commander &commands){
         splcmd = strtok(line," "); // assigns a word from the command input to splcmd
 
 	 // Goes through cmdBlock and add each word to the queue
-                while(splcmd != NULL)   //each loop cycle assigns a string to the queue^M
+                while(splcmd != NULL)   //each loop cycle assigns a word to the queue
         {
                 cmdQueue.push(splcmd);
                 splcmd = strtok(NULL," ");
