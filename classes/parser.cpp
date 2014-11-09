@@ -8,7 +8,7 @@ splcmd = NULL; // sets pointer back to NULL
 Parser::Parser(string cmdBlock, Commander &commands){
 	
 	strcpy(line, cmdBlock.c_str()); //converts cmdBlock into line array
-        splcmd = strtok(line," "); // assigns a piece of the command input seperated by a whitespace to splcmd
+        splcmd = strtok(line," "); // assigns a word from the command input to splcmd
 
 	 // Goes through cmdBlock and add each word to the queue
                 while(splcmd != NULL)   //each loop cycle assigns a string to the queue^M
