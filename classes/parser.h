@@ -32,7 +32,6 @@ public:
 	Command command;
 	ShellError error;
 	string errorMessage;
-	Parser();
 	Parser(string cmdBlock, Commander &commands);
 	~Parser();
 	bool hasError;
