@@ -1,85 +1,176 @@
-#include "parser.h"
+#pragma once
 
-Parser::~Parser(){
-	
-splcmd = NULL; // sets pointer back to NULL
-}
-
-Parser::Parser(string cmdBlock, Commander &commands){
-	
-	strcpy(line, cmdBlock.c_str()); //converts cmdBlock into line array
-        splcmd = strtok(line," "); // assigns a word from the command input to splcmd
-
-	 // Goes through cmdBlock and add each word to the queue
-                while(splcmd != NULL)   //each loop cycle assigns a word to the queue
-        {
-                cmdQueue.push(splcmd);
-                splcmd = strtok(NULL," ");
-        };
+#include "command.cpp"
+#include "commander.cpp"
+#include "shell-error.h"
+#include <string>
+#include <vector>
+#include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+#include <queue>
+#include <cstring> //needed for linux
+#define MAX_CHAR 257 //defines the max chars in a char array
 
 
-        // Resolve the queue by building out cmdName, cmdArgs, and cmdFlags
-         resolveQueue();
+using namespace std;
 
-	// Try to resolve the command from the cmd IOC
-	try{
-		this->command = commands->resolve( this->cmdName, this->cmdArgs, this->cmdFlags );
-	}
-	catch(const ShellError& resolutionError){
-		this->hasError = true;
-		this->error = resolutionError;
-	}
-}
+class Parser
+{
+private:
+    /**
+    * The entire line entered at the shell
+    *
+    * @property {string} cmdBlock
+    */
+    string cmdBlock;
 
-void Parser::resolveQueue(){
-	cmdName = cmdQueue.front(); //first element is popped and assigned to cmdName
+    /**
+    * Parsed name of the command
+    *
+    * @property {string} cmdName
+    */
+    string cmdName;
+
+    /**
+    * Parsed list of the command's arguments
+    *
+    * @property {vector<string>} cmdArgs
+    */
+    vector<string> cmdArgs;
+
+    /**
+    * Parsed list of the command's flags
+    *
+    * @property {vector<string>} cmdFlags
+    */
+    vector<string> cmdFlags;
+
+    /**
+    * Queue of each 'word' in the command block
+    *
+    * @property {queue<string>} cmdQueue
+    */
+    queue<string> cmdQueue;
+
+    /**
+    * Pointer that will point to one "string" at a time
+    *
+    * @property {c string} splcmd
+    */
+    char *splcmd;
+
+    /**
+    * The input line (redundant)
+    *
+    * @property {c str} line
+    */
+    char line[MAX_CHAR];
+
+    /**
+    * Flag determining whether the parser should keep resolving the queue
+    *
+    * @property {boolean} keepResolving
+    */
+    bool keepResolving;
+    void resolveQueue(){
+        this->cmdName = cmdQueue.front();
         cmdQueue.pop();
+
         keepResolving = true;
         isredirect = false;
         iscfile = false;
 
-	while(cmdQueue.size() > 0 && keepResolving)
+        while(cmdQueue.size() > 0 && keepResolving)
         {
-                string front = cmdQueue.front();
-                switch(front.front())
-                {
-                        case '-':
-                                // Must be a set of flags. Add element to cmdFlags vector
-                                cmdFlags.push_back(front);
-                                cmdQueue.pop();
+            string front = cmdQueue.front();
 
-                                break;
-                        case '>':
-                                // Must be one of the output redirectors. Will add to cmdFlags vector
-                                cmdFlags.push_back(front);
-                                cmdQueue.pop();
+            switch(front.front())
+            {
+                case '-':
+                    cmdFlags.push_back(front);
+                    cmdQueue.pop();
+                    break;
+                case '>':
+                    cmdFlags.push_back(front);
+                    cmdQueue.pop();
 
-                                // assume the next word on the queue is the filename
-                                cmdArgs.push_back(cmdQueue.front());
-                                keepResolving = false;
-                                isredirect = true;
-                                break;
+                    cmdArgs.push_back(cmdQueue.front());
+                    keepResolving = false;
+                    isredirect = true;
+                    break;
+                default:
+                    cmdArgs.push_back(front);
+                    cmdQueue.pop();
+            }
 
-                        //case '"':
-                                // For fun, keep popping until you get to the
-                                // closing string. Treat that as an argument.
+            strcpy(line, cmdName.c_str());
+            strtok(line, ".");
+            splcmd = strtok(NULL, ".");
 
-                        default:
-                                // Must be an argument
-                                cmdArgs.push_back(front);
-                                cmdQueue.pop();
-                }
-        }
-        
-        /* The check for a C program as the command*/
-
-        strcpy(line, cmdName.c_str());  //converts cmdName into line array
-        strtok(line,".");
-        splcmd = strtok(NULL,".");      //gets the extension of the file; if there is one
-
-        if((splcmd = "c")||(splcmd = "cpp"))
+            if((splcmd = "c") || (splcmd = "cpp"))
                 iscfile = true;
+        }
+    }
         
+public:
+    /**
+    * The resolved command
+    *
+    * @property {Command} command
+    */
+    Command command;
 
+    /**
+    * Error object
+    *
+    * @property {ShellError} error
+    */
+    ShellError error;
 
-}
+    /**
+    * Whether or not the parser has encountered an error
+    *
+    * @property {boolean} hasError
+    */
+    bool hasError;
+
+    /**
+    * Determine whether or not the command is a redirection
+    *
+    * @property {boolean} isredirect
+    */
+    bool isredirect;
+
+    /**
+    * Determine whether or not the command is a C/CPP file
+    *
+    * @property {boolean} iscfile
+    */
+    bool iscfile;
+
+    
+    Parser(string cmdBlock, Commander &commands){
+        strcpy(line, cmdBlock.c_str()); // converts cmdBlock into line array
+        splcmd = strtok(line," "); // assigns a word from the command input to the splcmd
+
+        while(splcmd != NULL)
+        {
+            cmdQueue.push(splcmd);
+            splcmd = strtok(NULL," ");
+        };
+
+        resolveQueue();
+
+        try{
+            this->command = commands->resolve( this->cmdName, this->cmdArgs, this->cmdFlags );
+        }
+        catch(const ShellError& resolutionError){
+            this->hasError = true;
+            this->error = resolutionError;
+        }
+    }
+    ~Parser(){
+        this->splcmd = NULL;
+    }
+};
