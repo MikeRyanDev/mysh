@@ -17,5 +17,5 @@ Command Commander::resolve(string cmdName, vector<string> args, vector<char> fla
 	if( search != this->container.end() )
 		return (*this->container[cmdName])(args, flags);
 	else
-		throw ShellError("Command not found", "There is no internal command with the name " + cmdName);
+		return new ExternalCommand(args, flags);
 }

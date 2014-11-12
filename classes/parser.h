@@ -1,11 +1,17 @@
-#ifndef PARSER_H
-#define PARSER_H
+#pragma once
+
 #include "command.h"
 #include "commander.h"
+#include "shell-error.h"
 #include <string>
 #include <vector>
-#include "shell-error.h"
+#include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
 #include <queue>
+#include <cstring> //needed for linux
+#define MAX_CHAR 257 //defines the max chars in a char array
+
 
 using namespace std;
 
@@ -18,12 +24,17 @@ private:
 	vector<string> cmdFlags;
 	queue<string> cmdQueue;
 	void resolveQueue();
+	char *splcmd; //pointer that will point to one "string" at a time
+        char line[MAX_CHAR];
+        bool keepResolving;
+        
 public:
 	Command command;
-	bool hasError;
 	ShellError error;
 	string errorMessage;
 	Parser(string cmdBlock, Commander &commands);
+	~Parser();
+	bool hasError;
+        bool isredirect; //will tell us if the command is a redirection
+        bool iscfile;	//will tell us if the command is for quick compile
 };
-
-#endif
