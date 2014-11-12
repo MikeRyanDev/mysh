@@ -39,8 +39,7 @@ private:
 
 public:
 
-	qkcompile(); //default contrutor
-	qkcompile( string command, vector<string> arguments, vector<char> flags );//overloaded contructor
+	qkcompile( string command, vector<string> arguments, vector<string> flags );//overloaded contructor
 	~qkcompile(); //decontructor
 
 	
