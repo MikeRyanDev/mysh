@@ -1,5 +1,5 @@
 #!/bin/sh
-#qkcompile.sh - the script depends on qkcompile.cpp for arguments
+#qkcompile.sh - this script depends on qkcompile.cpp for arguments
 
 
 ##-For C++ compiling-##
