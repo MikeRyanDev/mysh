@@ -7,7 +7,7 @@
 class cdCommand : public Command{
 public:
 	string execute();
-	static Command create(vector<string> args, vector<char> flags);
+	static Command create(vector<string> args, vector<string> flags);
 };
 
 
