@@ -23,7 +23,7 @@ private:
 	* @param {map<string, Command function>} map
 	* @private
 	*/
-	map<string,Command(*)(vector<string>, vector<char>)> container;
+	map<string,Command(*)(vector<string>, vector<string>)> container;
 public:
 	/**
 	* Method to register a constructor and a command name with the Commander IOC
