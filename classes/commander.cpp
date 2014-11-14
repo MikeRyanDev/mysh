@@ -34,7 +34,7 @@ public:
 	*
 	* @return {null}
 	*/
-	void enlist( string cmdName, Command(*creator)(vector<string>, vector<char>) ){
+	void enlist( string cmdName, Command(*creator)(vector<string>, vector<string>) ){
 		this->container[cmdName] = creator;
 	}
 
