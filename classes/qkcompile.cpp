@@ -18,7 +18,7 @@
 using namespace std;
 
 
-class qkcompile{
+class qkcompile: public command{
 
 
 public:
@@ -131,7 +131,7 @@ void get_flgs(vector<string> flags)
 
 
 
-void script_call()
+void execute()
 {
 	pid_t pid = fork();
 
