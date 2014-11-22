@@ -131,7 +131,7 @@ void get_flgs(vector<string> flags)
 
 
 
-void execute()
+void script_call()
 {
 	pid_t pid = fork();
 
