@@ -2,7 +2,7 @@
 
 #include "command.cpp"
 #include "commander.cpp"
-#include "shell-error.h"
+#include "shell-error.cpp"
 #include <string>
 #include <vector>
 #include <iostream>
