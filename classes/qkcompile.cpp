@@ -1,30 +1,27 @@
 //***********************************************************//
 //	File: qkcompile.cpp
 //	Author: Landan M Young Jackson
-//
 //***********************************************************//
 
-#include "qkcompile.h"
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <cstring>
+#include <unistd.h> /*for fork*/
+#include <sys/types.h> /*for pid_t*/
+#include <sys/wait.h> /*for wait*/
+#include <string>
+#include <vector>
+
+#define MAX_CHARS 257
+
+using namespace std;
 
 
+class qkcompile: public command{
 
 
-
-
-//***********************************************************//
-//	qkcompile Class Constructor - qkcompile()
-//	args: none
-//	return: none
-//	description: basic constructor
-//***********************************************************//
-qkcompile::qkcompile()
-{
-
-
-}
-
-
-
+public:
 
 //***********************************************************//
 //	qkcompile Class Overloaded Constructor - qkcompile()
@@ -33,7 +30,7 @@ qkcompile::qkcompile()
 //	description: will assign values to the member vars
 //	command, vec_args, vec_flgs.
 //***********************************************************//
-qkcompile::qkcompile(string command, vector<string> arguments, vector<string> flags)
+qkcompile(string command, vector<string> arguments, vector<string> flags)
 {
 	set_base_name(command);
 	get_flgs(flags);
@@ -50,12 +47,19 @@ qkcompile::qkcompile(string command, vector<string> arguments, vector<string> fl
 //	return: none
 //	description: decontructor
 //***********************************************************//
-qkcompile::~qkcompile()
+~qkcompile()
 {
 
 }
 
 
+private:
+
+string _cmd; 		//command name; in this case the c/c++ file
+string base_name;	// file name without the extension
+string c_type;		//file type (c or cpp)
+string all_args;	//string containing all arguments seperated by whitespace
+string all_flags;	//string containing all arguments seperated by whitespace
 
 
 //***********************************************************//
@@ -65,7 +69,7 @@ qkcompile::~qkcompile()
 //	description: strips the extension from a file name and assigns
 //	it to the member var base_name.
 //***********************************************************//
-void qkcompile::set_base_name(string command)
+void set_base_name(string command)
 {
 	char str[MAX_CHARS] = {'\0'};
 	string temp_name;
@@ -84,7 +88,7 @@ void qkcompile::set_base_name(string command)
 //	description: combines all arguments from passed vector into 
 //	a single string.
 //***********************************************************//
-void qkcompile::get_args(vector<string> arguments)
+void get_args(vector<string> arguments)
 {
 	string as;
 	if(arguments.empty()) return;
@@ -106,7 +110,7 @@ void qkcompile::get_args(vector<string> arguments)
 //	description: combines all flags from passed vector into
 //	a single string
 //***********************************************************//
-void qkcompile::get_flgs(vector<string> flags)
+void get_flgs(vector<string> flags)
 {
 
 	//gets all flags into a single string	
@@ -127,7 +131,7 @@ void qkcompile::get_flgs(vector<string> flags)
 
 
 
-void qkcompile::script_call()
+void script_call()
 {
 	pid_t pid = fork();
 
@@ -146,3 +150,6 @@ void qkcompile::script_call()
 	return;
 
 }
+
+
+}; //end of class
