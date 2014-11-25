@@ -85,12 +85,31 @@ private:
                     cmdQueue.pop();
                     break;
                 case '>':
-                    cmdArgs.push_back(front);
-                    cmdQueue.pop();
+                    if(front == "<")
+                    {
+                        append = false;
+                        cmdQueue.pop();
 
-                    cmdArgs.push_back(cmdQueue.front());
-                    keepResolving = false;
-                    isredirect = true;
+                        outputFile = cmdQueue.front();
+                        cmdQueue.pop();
+                        keepResolving = false;
+                        isredirect = true;
+                    }
+                    else if(front == "<<")
+                    {
+                        append = true;
+                        cmdQueue.pop();
+
+                        outputFile = cmdQueue.front();
+                        cmdQueue.pop();
+                        keepResolving = false;
+                        isredirect = true;
+                    }
+                    else
+                    {
+                        cmdArgs.push_back(front);
+                        cmdQueue.pop();
+                    }
                     break;
                 default:
                     cmdArgs.push_back(front);
@@ -134,6 +153,20 @@ public:
     * @property {boolean} isredirect
     */
     bool isredirect;
+
+    /**
+    * Determine whether redirection output should append or overwrite file
+    *
+    * @property {boolean} append
+    */
+    bool append;
+
+    /**
+    * Name of the file to redirect output to
+    *
+    * @property {string} outputFile
+    */
+    string outputFile;
 
     /**
     * Determine whether or not the command is a C/CPP file

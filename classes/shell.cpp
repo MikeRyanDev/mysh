@@ -1,5 +1,6 @@
 #include "commander.cpp"
 #include "parser.cpp"
+#include "file-output.cpp"
 #include <iostream>
 #include <sstream>
 
@@ -32,13 +33,19 @@ public:
 			{
 				Parser parsedCmd = Parser(cmdBlock, this->commands);
 
-				if(parsedCmd->hasError)
+				if(parsedCmd.hasError)
 				{
 					cout << "error" << endl;
 				}
+				else if(parsedCmd.isredirect)
+				{
+					FileOutput out = FileOutput(parsedCmd.outputFile, parsedCmd.append);
+
+					out.write( parsedCmd.command.execute() );
+				}
 				else
 				{
-					cout << parsedCmd->command->execute();
+					cout << parsedCmd.command.execute();
 				}
 			}
 		}
