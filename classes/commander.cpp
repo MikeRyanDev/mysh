@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "command.cpp"
-#include "ExternalCommand.cpp"
+#include "../commands/external-command.cpp"
 
 using namespace std;
 
