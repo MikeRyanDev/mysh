@@ -65,10 +65,12 @@ class MyCommand : Command { /* Class Logic */ }
 
 int main(){
     // Register a command with the IoC
-    IoC.commands.enlist("mycommand", MyCommand);
+    mysh.commands.enlist("mycommand", /* MyCommand constructor */);
     
     // Resolving a command from the IoC
-    IoC.commands.resolve("mycommand", /* constructor arguments */);
+    Command myCmd = mysh.commands.resolve("mycommand", /* constructor arguments */);
+
+    cout >> myCmd.execute();
 }
 </code></pre>
 
