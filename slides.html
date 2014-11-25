@@ -14,14 +14,14 @@
   <div class="reveal">
     <div class="slides">
       <section>
-
-<h1>mysh design implementation</h1>
-<h2>By Alex, Jacob, Julian, Landan, and Mike</h2>
+<h1>mysh</h1>
+<h2>design implementation</h2>
+<h4>By Alex, Jacob, Julian, Landan, and Mike</h4>
 
       </section>
       <section>
 
-<h1>Software Engineering Approach for the Shell's Design</h1>
+<h2>Software Engineering Approach for the Shell's Design</h2>
 
 <li>Larger group let us focus on code structure and maintainability when creating our implementation of mysh</li>
 <li>We took an object-oriented approach and wrote our implementation in C++11</li>
@@ -29,7 +29,7 @@
       </section>
       <section>
 
-<h1>Core Concepts</h1>
+<h2>Core Concepts</h2>
 
 <ul>
   <li>Dependency Injection</li>
@@ -40,7 +40,7 @@
       </section>
       <section>
 
-<h1>Dependency Injection</h1>
+<h2>Dependency Injection</h2>
 
 <ul>
   <li>To put it simply, dependency injection (DI) let us write our application modularly</li>
@@ -51,7 +51,7 @@
       </section>
       <section>
 
-<h1>Inversion of Control</h1>
+<h2>Inversion of Control</h2>
 
 <ul>
   <li>The concept powering that "central component"</li>
@@ -75,7 +75,7 @@ int main(){
       </section>
       <section>
 
-<h1>Separation of Concerns</h1>
+<h2>Separation of Concerns</h2>
 
 <ul>
   <li>We knew that a solid, object-oriented approach to the software requirements would let us solve "hard" problems with ease
@@ -93,7 +93,7 @@ int main(){
       </section>
       <section>
 
-<h1>Shell Class</h1>
+<h2>Shell Class</h2>
 
 <ul>
   <li>Provides a very simple Read-Evaluate-Print Loop (REPL)</li>
@@ -103,8 +103,9 @@ int main(){
 
       </section>
       <section>
+        <section>
 
-<h1>Parser Class</h1>
+<h2>Parser Class</h2>
 
 <ul>
   <li>This is where the bulk of our implementation's complexity exists</li>
@@ -119,7 +120,7 @@ int main(){
     </ol>
   </li>
 </ul>
-
+        </section>
         <section>
 <ul>
   <li>Top of the queue is expected to be the name of the command
@@ -132,7 +133,7 @@ int main(){
       </section>
       <section>
 
-<h1>Command Class</h1>
+<h2>Command Class</h2>
 
 <ul>
   <li>A template / parent class that forces a command to adhere to a standard API</li>
@@ -144,7 +145,7 @@ int main(){
       </section>
       <section>
 
-<h1>IoC Container Class</h1>
+<h2>IoC Container Class</h2>
 
 <ul>
   <li>Implementation really isn't as complex as you would expect</li>
@@ -162,7 +163,7 @@ int main(){
       </section>
       <section>
 
-<h1>Shell Error Class</h1>
+<h2>Shell Error Class</h2>
 <ul>
   <li>We heavily use C++'s try, catch, and throw syntax to make error handling clear and easy to follow</li>
   <li>Normally, there would be a class for each error type the command might encounter</li>
@@ -173,7 +174,7 @@ int main(){
       </section>
       <section>
 
-<h1>Reflections on Design</h1>
+<h2>Reflections on Design</h2>
 <ul>
   <li>Worked well for us when developing mysh</li>
   <li>Makes the codebase easy to ready and -- if required -- makes adding new functionality to the shell rather straightforward</li>
@@ -182,7 +183,7 @@ int main(){
       </section>
       <section>
 
-<h1>Regarding our Development Process</h1>
+<h2>Regarding our Development Process</h2>
 <ul>
   <li>Ended up using git as our version control system instead of Google Drive</li>
   <li>Git let us easily work on the same body of code without worrying about overwrites or merging</li>
@@ -195,7 +196,8 @@ int main(){
   </div>
 
   <script type="text/javascript">
-Reveal.initialize({
+Reveal.initialize({// Transition style
+    transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
     dependencies: [
         // Syntax highlight for <code> elements
         { src: '//cdnjs.cloudflare.com/ajax/libs/reveal.js/2.6.2/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
