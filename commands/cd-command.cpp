@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include "unistd.h"
+#include <sys/types.h>
+#include <pwd.h>
 
 using namespace std;
 
@@ -18,7 +20,13 @@ public:
 		int error;
 
 		if(this->arguments.empty())
-			output = "Changed directory to home";
+		{
+			struct passwd *pw = getpwuid(getuid());
+
+			output = string(pw->pw_dir);
+
+			chdir(output.c_str());
+		}
 		else
 		{
 			error = chdir(this->arguments[0].c_str());

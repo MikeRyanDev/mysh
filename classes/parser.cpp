@@ -203,7 +203,7 @@ public:
                 size_t foundC = this->cmdName.find(".c");
                 size_t foundCpp = this->cmdName.find(".cpp");
 
-                if(foundC == string::npos || foundCpp == string::npos)
+                if(foundC != string::npos || foundCpp != string::npos)
                 {
                     this->command = new qkcompile(this->cmdName, this->cmdArgs, moreFlags );
                 }
