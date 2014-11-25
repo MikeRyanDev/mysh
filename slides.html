@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Title</title>
+    <title>mysh slides</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <style type="text/css">
-      @import url(//fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/reveal.js/2.6.2/css/reveal.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/reveal.js/2.6.2/css/theme/simple.css">
 
-      body { font-family: 'Droid Serif'; }
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/reveal.js/2.6.2/js/reveal.min.js"></script>
   </head>
   <body>
-    <textarea id="source">
+  <div class="reveal">
+    <div class="slides">
+      <section data-markdown>
+        <script type="text/template">
 
 # mysh design implementation
 ### By Alex, Jacob, Julian, Landan, and Mike
 
----
+        </script>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
 
 # Software Engineering Approach for the Shell's Design
 
 * Larger group let us focus on code structure and maintainability when creating our implementation of mysh
 * We took an object-oriented approach and wrote our implementation in C++11
 
----
+        </script>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
 
 # Core Concepts
 
@@ -37,7 +38,10 @@
 * Inversion of Control
 * Separation of Concerns
 
----
+        </script>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
 
 # Dependency Injection
 
@@ -45,7 +49,10 @@
 * Instead, a single, central component knows about all other components
 * If a component depends on other components, it can resolve these dependencies via the central component
 
----
+        </script>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
 
 # Inversion of Control
 
@@ -64,7 +71,11 @@
             IoC.commands.resolve("mycommand", /* constructor arguments */);
         }
 
----
+
+        </script>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
 
 # Separation of Concerns
 * We knew that a solid, object-oriented approach to the software requirements would let us solve "hard" problems with ease
@@ -75,14 +86,20 @@
     4. IoC Container
     5. Shell Error
 
----
+        </script>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
 
 # Shell Class
 * Provides a very simple Read-Evaluate-Print Loop (REPL)
 * When a user types in a command, the Shell creates a Parser to execute the typed command
 * That's it! No more than 30 lines of code
 
----
+        </script>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
 
 # Parser Class
 * This is where the bulk of our implementation's complexity exists
@@ -94,12 +111,20 @@
     3. `>>`
     4. `files.txt`
 
+        </script>
+        <section data-markdown>
+          <script type="text/template">
+
 * Top of the queue is expected to be the name of the command
 * Each subsequent element in the queue is expected to be an argument and is added to a string vector
 * When the parser hits an output operator like `>>`, it halts adding arguments to the string vector and changes output mode accordingly
 * After parsing is completed, the parser sends the command name and arguments to the IoC container to resolve the command as an object, then executes it
 
----
+          </script>
+        </section>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
 
 # Command Class
 * A template / parent class that forces a command to adhere to a standard API
@@ -107,7 +132,10 @@
 * All commands implement an execute method that returns a string where that string is the output of executing the method
 * Returning a string let's other parts of the application handle output, rather than the command objects
 
----
+        </script>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
 
 # IoC Container Class
 * Implementation really isn't as complex as you would expect
@@ -118,20 +146,30 @@
     3. Does the map of internal commands contain the command name? Return the correct command
     4. If the command name does not satisfy any of the above conditions, return an External command
 
----
+        </script>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
 
 # Shell Error Class
 * We heavily use C++'s `try`, `catch`, and `throw` syntax to make error handling clear and easy to use
 * Normally, there would be a class for each error type the command might encounter
 * Software requirements for mysh only required one error, and the output is the same for all errors, thus only one error handling class
 
----
+
+        </script>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
 
 # Reflections on Design
 * Worked well for us when developing mysh
 * Makes the codebase easy to ready and -- if required -- makes adding new functionality to the shell rather straightforward
 
----
+        </script>
+      </section>
+      <section data-markdown>
+        <script type="text/template">
 
 # Regarding our Development Process
 * Ended up using git as our version control system instead of Google Drive
@@ -139,15 +177,9 @@
 * Hosted our git repository on Github. Full source code and slides for our shell can be found at https://github.com/MikeRyanDesigns/mysh
 * Github let us visually view changes in the source code as well as create issues that were assigned to team members throughout the lifecycle of the development process
 
----
-
-# Demo
-
-    </textarea>
-    <script src="//gnab.github.io/remark/downloads/remark-latest.min.js">
-    </script>
-    <script>
-      var slideshow = remark.create();
-    </script>
+        </script>
+      </section>
+    </div>
+  </div>
   </body>
 </html>
