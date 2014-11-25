@@ -9,7 +9,7 @@ private:
 	vector<string> arguments;
 	vector<char> flags;
 public:
-	Command( vector<string> args, vector<string> flgs ){
+	Command( vector<string> args ){
 
 	}
 	virtual string execute();

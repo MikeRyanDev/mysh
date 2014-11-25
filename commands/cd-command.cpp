@@ -7,6 +7,6 @@ string cdCommand::execute(){
 	return output;
 }
 
-static Command cdCommand::create(vector<string> args, vector<string> flags){
+static cdCommand cdCommand::create(vector<string> args, vector<string> flags){
 	return new cdCommand(args, flags);
 }

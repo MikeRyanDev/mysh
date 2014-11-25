@@ -2,7 +2,7 @@
 
 #include "command.cpp"
 #include "commander.cpp"
-#include "shell-error.h"
+#include "shell-error.cpp"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -38,13 +38,6 @@ private:
     * @property {vector<string>} cmdArgs
     */
     vector<string> cmdArgs;
-
-    /**
-    * Parsed list of the command's flags
-    *
-    * @property {vector<string>} cmdFlags
-    */
-    vector<string> cmdFlags;
 
     /**
     * Queue of each 'word' in the command block
@@ -88,11 +81,11 @@ private:
             switch(front.front())
             {
                 case '-':
-                    cmdFlags.push_back(front);
+                    cmdArgs.push_back(front);
                     cmdQueue.pop();
                     break;
                 case '>':
-                    cmdFlags.push_back(front);
+                    cmdArgs.push_back(front);
                     cmdQueue.pop();
 
                     cmdArgs.push_back(cmdQueue.front());
@@ -163,7 +156,7 @@ public:
         resolveQueue();
 
         try{
-            this->command = commands->resolve( this->cmdName, this->cmdArgs, this->cmdFlags );
+            this->command = commands->resolve( this->cmdName, this->cmdArgs );
         }
         catch(const ShellError& resolutionError){
             this->hasError = true;

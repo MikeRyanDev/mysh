@@ -1,7 +1,16 @@
-#incude "shell-error.h"
 #include <string>
 
-ShellError::ShellError(string errorName, string errorMessage){
-	this->name = errorName;
-	this->message = errorMessage;
-}
+using namespace std;
+
+class ShellError
+{
+public:
+	string name;
+	string message;
+	
+	ShellError(string errorName, string errorMessage){
+		name = errorName;
+		message = errorMessage;
+	
+	};
+};
