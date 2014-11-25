@@ -5,7 +5,7 @@
 
 # Software Engineering Approach for the Shell's Design
 
-* Larger group let us focus on code structure and maintanability when creating our implementation of mysh
+* Larger group let us focus on code structure and maintainability when creating our implementation of mysh
 * We took an object-oriented approach and wrote our implementation in C++11
 
 ---
@@ -21,7 +21,7 @@
 # Dependency Injection
 
 * To put it simply, dependency injection (DI) let us write our application modularly
-* Instead, a single, cental component knows about all other components
+* Instead, a single, central component knows about all other components
 * If a component depends on other components, it can resolve these dependencies via the central component
 
 ---
@@ -33,6 +33,7 @@
 * Our Parsers and Shell classes resolve commands from this IoC container
 * Registering commands is really simple:
 
+````cpp
         class MyCommand : Command { /* Class Logic */ }
     
         int main(){
@@ -42,7 +43,7 @@
             // Resolving a command from the IoC
             IoC.commands.resolve("mycommand", /* constructor arguments */);
         }
-
+````
 ---
 
 # Separation of Concerns
@@ -73,9 +74,12 @@
     3. `>>`
     4. `files.txt`
 
+---
+
+# Parser Class (continued)
 * Top of the queue is expected to be the name of the command
 * Each subsequent element in the queue is expected to be an argument and is added to a string vector
-* When the parser hits an output operator like `>>`, it halts adding arguments to the string vector and changes output mode occordingly
+* When the parser hits an output operator like `>>`, it halts adding arguments to the string vector and changes output mode accordingly
 * After parsing is completed, the parser sends the command name and arguments to the IoC container to resolve the command as an object, then executes it
 
 ---
