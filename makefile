@@ -1,3 +1,3 @@
 all:
-	@read -p "Enter Executable name: " module; \
-	g++ mysh.cpp -o $$module --std=c++11
+	@read -p "Enter directory name: " module; \
+	g++ mysh.cpp -o $$module/mysh --std=c++11

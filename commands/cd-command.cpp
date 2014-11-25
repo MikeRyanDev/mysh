@@ -26,6 +26,8 @@ public:
 			output = string(pw->pw_dir);
 
 			chdir(output.c_str());
+
+			output = "";
 		}
 		else
 		{
