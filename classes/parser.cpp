@@ -171,6 +171,7 @@ public:
     Parser(string cmdBlock, Commander &commands){
         strcpy(line, cmdBlock.c_str()); // converts cmdBlock into line array
         splcmd = strtok(line," "); // assigns a word from the command input to the splcmd
+        this->error = false;
 
         while(splcmd != NULL)
         {

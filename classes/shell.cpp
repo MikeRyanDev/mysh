@@ -36,7 +36,7 @@ public:
 
 				if(parsedCmd.hasError)
 				{
-					cout << "error" << endl;
+					cout << "mysh: Error detected" << endl;
 				}
 				else if(parsedCmd.isredirect)
 				{
