@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <vector>
-
+#include <string>
 #include <unistd.h>
 #include <dirent.h>
 
@@ -29,8 +29,9 @@ public:
 	* @return {null}
 	*/	
 	ExternalCommand(string cmd, vector<string> args, vector<char> flags) : Command(args){
-		setCmd(cmd);
-		setFullArgs(args, flags);
+		// setCmd(cmd);
+		// setFullArgs(args, flags);
+		createCommandBlock(cmd, args);
 	}
 
 	/**
@@ -58,16 +59,17 @@ private:
 	* @return {null}
 	*/		
 	void executeCommand(){
-		char * const cmd = getCmd();
-		char * const * args = getFullArgs();
+		// char * const cmd = getCmd();
+		// char * const * args = getFullArgs();
+		// //forks process
+		// int id = fork();
 
-		//forks process
-		int id = fork();
+		// //if process is child, execute full command
+		// if(id == 0) {
+		// 	execvp(cmd, args);
+		// }
 
-		//if process is child, execute full command
-		if(id == 0) {
-			execvp(cmd, args);
-		}
+		system(cmdBlock.c_str());
 	}
 
 	/**
@@ -78,9 +80,9 @@ private:
 	*
 	* @return {null}
 	*/	
-	void setCmd(string cmd){
-		_cmd = strdup(cmd.c_str());
-	}
+	// void setCmd(string cmd){
+	// 	_cmd = strdup(cmd.c_str());
+	// }
 
 	/**
 	* Sets private char pointer array _args 
@@ -91,24 +93,34 @@ private:
 	*
 	* @return {null}
 	*/	
-	void setFullArgs(vector<string> args, vector<char> flags){
-		_args  = new char*[args.size() + flags.size()];
+	// void setFullArgs(vector<string> args, vector<char> flags){
+	// 	_args  = new char*[args.size() + flags.size()];
 
-		vector<string>::iterator i = args.begin();
-		int count = 0;
+	// 	vector<string>::iterator i = args.begin();
+	// 	int count = 0;
 
-		_args[0] = strdup(getCmd());
+	// 	_args[0] = strdup(getCmd());
 
-		for(; i != args.end(); i++){
-			_args[count] = strdup((*i).c_str());
-			count++;			
+	// 	for(; i != args.end(); i++){
+	// 		_args[count] = strdup((*i).c_str());
+	// 		count++;			
+	// 	}
+	// 	vector<char>::iterator k = flags.begin();
+	// 	for(; k != flags.end(); k++){
+	// 		_args[count] = strdup(makeFlagArg(*k));
+	// 		count++;
+	// 	}
+	// }
+
+	void createCommandBlock(string name, vector<string> args){
+		
+		this->cmdBlock = name + " ";
+
+		for(size_t i = 0; i != args.size(); ++i)
+		{
+			cmdBlock = cmdBlock + args[i] + " ";
 		}
-		vector<char>::iterator k = flags.begin();
-		for(; k != flags.end(); k++){
-			_args[count] = strdup(makeFlagArg(*k));
-			count++;
-		}
-	}
+	};
 
 	/**
 	* Appends '-' to flag char. Returns char array  
@@ -118,13 +130,13 @@ private:
 	*
 	* @return {char *}
 	*/	
-	char *makeFlagArg(const char &c){
-		char *tmp = new char[3];
-		tmp[0] = '-';
-		tmp[1] = c;
-		tmp[2] = '\0';
-		return tmp;
-	}
+	// char *makeFlagArg(const char &c){
+	// 	char *tmp = new char[3];
+	// 	tmp[0] = '-';
+	// 	tmp[1] = c;
+	// 	tmp[2] = '\0';
+	// 	return tmp;
+	// }
 
 	/**
 	* Gets private char array _cmd 
@@ -133,9 +145,9 @@ private:
 	*
 	* @return {char *}
 	*/	
-	char * const getCmd(){
-		return _cmd;
-	}
+	// char * const getCmd(){
+	// 	return _cmd;
+	// }
 
 	/**
 	* Gets private char pointer array _args 
@@ -144,9 +156,9 @@ private:
 	*
 	* @return {char * const*}
 	*/	
-	char * const* getFullArgs(){
-		return _args;
-	}
+	// char * const* getFullArgs(){
+	// 	return _args;
+	// }
 
 private:
 	/**
@@ -154,12 +166,14 @@ private:
 	*
 	* @private
 	*/
-	char *	_cmd;
+	// char * _cmd;
 
 	/**
 	* Internal char array array of arguments
 	*
 	* @private
 	*/
-	char ** 	_args;
+	// char ** _args;
+
+	string cmdBlock;
 };
