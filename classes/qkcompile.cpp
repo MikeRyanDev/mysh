@@ -138,8 +138,7 @@ void script_call()
 	if (pid==0)
 	{
 		/*child process*/
-		execlp("./qkcompile.sh","qkcompile.sh",base_name.c_str(),c_type.c_str(),all_flags.c_str(),all_args.c_str(),NULL);
-
+		execlp("./classes/qkcompile.sh","qkcompile.sh",base_name.c_str(),c_type.c_str(),all_flags.c_str(),all_args.c_str(),NULL);
 	}
 	else /*pid != 0; parent process*/
 	{
