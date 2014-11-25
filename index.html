@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="mysh - Simple Unix Shell : Project for Unix Programming">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>mysh - Simple Unix Shell</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/MikeRyan52/mysh">View on GitHub</a>
+
+          <h1 id="project_title">mysh - Simple Unix Shell</h1>
+          <h2 id="project_tagline">Project for Unix Programming</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/MikeRyan52/mysh/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/MikeRyan52/mysh/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="mysh" class="anchor" href="#mysh" aria-hidden="true"><span class="octicon octicon-link"></span></a>mysh</h1>
+
+<p>Project for Unix Programming.</p>
+
+<h2>
+<a id="authors" class="anchor" href="#authors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors</h2>
+
+<ul>
+<li><p>Landan Young Jackson <a href="mailto:lmj0011@uah.edu">lmj0011@uah.edu</a></p></li>
+<li><p>Andrew Webb <a href="mailto:adw0022@uah.edu">adw0022@uah.edu</a></p></li>
+<li><p>Jacob <a href="mailto:jak0013@uah.edu">jak0013@uah.edu</a></p></li>
+<li><p>Julian Sy <a href="mailto:jns0019@uah.edu">jns0019@uah.edu</a></p></li>
+<li><p>Mike Ryan <a href="mailto:mar0018@uah.edu">mar0018@uah.edu</a></p></li>
+</ul>
+
+<h2>
+<a id="concepts" class="anchor" href="#concepts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Concepts</h2>
+
+<p>This take on the mysh project employs a number of different concepts to meet the project requirements:</p>
+
+<h3>
+<a id="no-regular-expressions" class="anchor" href="#no-regular-expressions" aria-hidden="true"><span class="octicon octicon-link"></span></a>No Regular Expressions</h3>
+
+<p>Instead of using regular expressions to parse commands entered in our shell, commands are broken into words and pushed onto a queue where each word is resolved one by one. For instance, the following command:</p>
+
+<pre><code>ls ~ -l &gt;&gt; output.txt
+</code></pre>
+
+<p>would create a queue that looks like this:</p>
+
+<ol>
+<li>ls</li>
+<li>~</li>
+<li>-l</li>
+<li>&gt;&gt;</li>
+<li>output.txt</li>
+</ol>
+
+<p>During parsing, we assume that the top of the queue is the command name. Then, as we resolve the queue we determine whether the string being parsed is a flag, argument, or operator by looking at the first two characters.</p>
+
+<h3>
+<a id="specific-classes-for-each-command" class="anchor" href="#specific-classes-for-each-command" aria-hidden="true"><span class="octicon octicon-link"></span></a>Specific classes for each command</h3>
+
+<p>To keep code clean, maintainable, and most importantly testable, we have broken each command out into their own classes. Each of these inherit from a parent Command class.</p>
+
+<h3>
+<a id="use-inversion-of-control-to-resolve-command-classes" class="anchor" href="#use-inversion-of-control-to-resolve-command-classes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use inversion of control to resolve command classes</h3>
+
+<p>In order to make our shell extensible, we have implemented a very basic IOC container. Basically, when we implement a new Command class, we register it with the command IOC. When a command is parsed in our shell, we first try to resolve a command class from this IOC. If we haven't implemented the class yet, the command is instead executed externally.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">mysh - Simple Unix Shell maintained by <a href="https://github.com/MikeRyan52">MikeRyan52</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
