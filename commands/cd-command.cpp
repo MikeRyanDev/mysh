@@ -1,5 +1,5 @@
-#import "cd-command.h"
-#import <string>
+#include "cd-command.h"
+#include <string>
 
 string cdCommand::execute(){
 	string output = "Changed directory";

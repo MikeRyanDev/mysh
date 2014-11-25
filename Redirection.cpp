@@ -52,7 +52,7 @@ int main()
 
 		if (outFile.is_open()) //file successfully opened 
 		{	  
-				for( int i = 0; i < v.size(); i++) //loop to print vector
+				for( size_t i = 0; i < v.size(); i++) //loop to print vector
 				{
 					outFile << v[i] << endl;
 				}	 
@@ -71,7 +71,7 @@ int main()
 
 		if (outFile.is_open()) //file successfully opened 
 		{	  
-				for( int i = 0; i < v.size(); i++) //loop to print vector
+				for( size_t i = 0; i < v.size(); i++) //loop to print vector
 				{
 					outFile << v[i] << endl;
 				}	 

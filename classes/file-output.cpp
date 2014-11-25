@@ -7,9 +7,9 @@ class FileOutput
 {
 public:
 	string outf;
-	boolean append;
+	bool append;
 
-	FileOutput( string outputFile, boolean appendOutputToFile ){
+	FileOutput( string outputFile, bool appendOutputToFile ){
 		outf = outputFile;
 		append = appendOutputToFile;
 	}
