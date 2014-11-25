@@ -1,12 +1,25 @@
-#include "cd-command.h"
+#pragma once
+
+#include "../classes/command.cpp"
 #include <string>
+#include <vector>
 
-string cdCommand::execute(){
-	string output = "Changed directory";
-	// edit
-	return output;
-}
+using namespace std;
 
-static cdCommand cdCommand::create(vector<string> args, vector<string> flags){
-	return new cdCommand(args, flags);
-}
+class cdCommand : public Command{
+public:
+	cdCommand( vector<string> args ) : Command(args){
+		cout << endl << "creating cd command" << endl;
+
+	};
+
+	virtual string execute(){
+		string output = "Changed directory";
+
+		return output;
+	};
+
+	static Command create(vector<string> args){
+		return cdCommand(args);
+	};
+};

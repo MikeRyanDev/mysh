@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../classes/command.cpp"
 #include <iostream>
 #include <string.h>

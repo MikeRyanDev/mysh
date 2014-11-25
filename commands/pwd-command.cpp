@@ -1,19 +1,23 @@
+#pragma once
+
 #include "../classes/command.cpp"
 #include <string>
 #include <vector>
 #include <iostream>
-#ifdef _WIN32
-	#include <direct.h>
-	#define getcwd _getcwd
-#elif
-	#include <unistd.h>
-#endif
+#include <unistd.h>
 
 class pwdCommand : public Command{
 public:
-	string execute(){
+	pwdCommand( vector<string> args ) : Command(args){
+
+	};
+	virtual string execute(){
 		string cwd(getcwd(NULL,0));
 
 		return cwd;
 	}
+
+	static Command create(vector<string> args){
+		return pwdCommand(args);
+	};
 };

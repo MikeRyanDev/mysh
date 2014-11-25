@@ -1,7 +1,8 @@
 // #include "classes/commander.cpp"
 // #include "classes/parser.cpp"
 #include "classes/shell.cpp"
-#include "commands/cd-command.h"
+#include "commands/cd-command.cpp"
+#include "commands/pwd-command.cpp"
 #include <string>
 
 int main()
@@ -9,8 +10,9 @@ int main()
 	Shell mysh;
 
 	mysh.commands.enlist("cd", &cdCommand::create);
+	mysh.commands.enlist("pwd", &pwdCommand::create);
 	
-	/*
-	mysh->run();
-	*/
+	mysh.run();
+
+	return 0;
 }

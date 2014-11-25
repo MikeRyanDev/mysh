@@ -26,7 +26,7 @@ public:
 			fs.open(outf, fstream::in | fstream::out | fstream::trunc);
 		}
 
-		fs << output;
+		fs << endl << output;
 
 		fs.close();
 	}

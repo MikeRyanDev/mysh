@@ -11,6 +11,10 @@
 #include <stdio.h>
 #include <queue>
 #include <cstring> //needed for linux
+#include "../commands/cd-command.cpp"
+#include "../commands/pwd-command.cpp"
+#include "../commands/ver-command.cpp"
+#include "../commands/external-command.cpp"
 #define MAX_CHAR 257 //defines the max chars in a char array
 
 
@@ -86,7 +90,7 @@ private:
                     cmdQueue.pop();
                     break;
                 case '>':
-                    if(front == "<")
+                    if(front == ">")
                     {
                         append = false;
                         cmdQueue.pop();
@@ -96,7 +100,7 @@ private:
                         keepResolving = false;
                         isredirect = true;
                     }
-                    else if(front == "<<")
+                    else if(front == ">>")
                     {
                         append = true;
                         cmdQueue.pop();
@@ -116,13 +120,6 @@ private:
                     cmdArgs.push_back(front);
                     cmdQueue.pop();
             }
-
-            strcpy(line, cmdName.c_str());
-            strtok(line, ".");
-            splcmd = strtok(NULL, ".");
-
-            if( strncmp(splcmd, "c") == 0 || strncmp(splcmd, "cpp") == 0)
-                iscfile = true;
         }
     }
         
@@ -183,7 +180,27 @@ public:
         resolveQueue();
 
         try{
-            this->command = &(commands.resolve( this->cmdName, this->cmdArgs ));
+            if(this->cmdName == "cd")
+            {
+                this->command = new cdCommand( this->cmdArgs );
+            }
+            else if(this->cmdName == "pwd")
+            {
+                this->command = new pwdCommand( this->cmdArgs );
+            }
+            else if(this->cmdName == "ver")
+            {
+                this->command = new verCommand( this->cmdArgs );
+            }
+            else
+            {
+                // auto r = commands.resolve( this->cmdName, this->cmdArgs );
+                // this->command = &r;
+                vector<char> flags;
+                this->command = new ExternalCommand( this->cmdName, this->cmdArgs, flags );
+            }
+
+
         }
         catch(const ShellError& resolutionError){
             this->hasError = true;

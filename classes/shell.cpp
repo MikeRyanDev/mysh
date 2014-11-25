@@ -18,16 +18,17 @@ public:
 		bool stop = false;
 
 		while(! stop){
-			cout << "mysh > ";
+			cout << "mysh> ";
 			getline(cin, cmdBlock);
+
 			if(cmdBlock.length() == 0)
 			{
-				cout << endl;
+				
 			}
 			else if(cmdBlock == "exit")
 			{
 				stop = true;
-				cout << endl << "Goodbye!" << endl << endl;
+				cout << "Goodbye!" << endl;
 			}
 			else
 			{
@@ -45,7 +46,7 @@ public:
 				}
 				else
 				{
-					cout << parsedCmd.command->execute();
+					cout << parsedCmd.command->execute() << endl;
 				}
 			}
 		}

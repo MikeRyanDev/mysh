@@ -57,6 +57,7 @@ public:
 		}
 		else
 		{
+			cout << endl << "Found the command: " << cmdName << endl;
 			vector<char> flags;
 			ExternalCommand external(cmdName, args, flags);
 			return external;
