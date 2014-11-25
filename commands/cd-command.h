@@ -1,6 +1,6 @@
 #ifndef CDCOMMAND_H
 #define CDCOMMAND_H
-#include "../classes/command.h"
+#include "command.h"
 #include <string>
 #include <vector>
 
