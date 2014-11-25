@@ -31,7 +31,7 @@ public:
 			}
 			else
 			{
-				Parser parsedCmd = Parser(cmdBlock, this->commands);
+				Parser parsedCmd(cmdBlock, this->commands);
 
 				if(parsedCmd.hasError)
 				{
@@ -39,7 +39,7 @@ public:
 				}
 				else if(parsedCmd.isredirect)
 				{
-					FileOutput out = FileOutput(parsedCmd.outputFile, parsedCmd.append);
+					FileOutput out(parsedCmd.outputFile, parsedCmd.append);
 
 					out.write( parsedCmd.command.execute() );
 				}

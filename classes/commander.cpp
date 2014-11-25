@@ -52,9 +52,15 @@ public:
 		auto search = this->container.find(cmdName);
 
 		if( search != this->container.end() )
+		{
 			return (*this->container[cmdName])(args);
+		}
 		else
-			return new ExternalCommand(cmdName, args);
+		{
+			vector<char> flags;
+			ExternalCommand external(cmdName, args, flags);
+			return (Command *) external;
+		}
 	}
 };
 

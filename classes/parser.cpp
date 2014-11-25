@@ -120,7 +120,7 @@ private:
             strtok(line, ".");
             splcmd = strtok(NULL, ".");
 
-            if((splcmd = "c") || (splcmd = "cpp"))
+            if((splcmd == "c") || (splcmd == "cpp"))
                 iscfile = true;
         }
     }

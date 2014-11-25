@@ -30,4 +30,4 @@ public:
 
 		fs.close();
 	}
-}
+};
