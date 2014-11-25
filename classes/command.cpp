@@ -7,10 +7,10 @@ using namespace std;
 
 class Command
 {
-private:
+public:
 	vector<string> arguments;
 	vector<char> flags;
-public:
+	
 	Command( vector<string> args ){
 		this->arguments = args;
 	}

@@ -2,6 +2,7 @@
 //	File: qkcompile.cpp
 //	Author: Landan M Young Jackson
 //***********************************************************//
+#pragma once
 
 #include <iostream>
 #include <stdio.h>
@@ -18,7 +19,7 @@
 using namespace std;
 
 
-class qkcompile: public command{
+class qkcompile: public Command{
 
 
 public:
@@ -30,7 +31,7 @@ public:
 //	description: will assign values to the member vars
 //	command, vec_args, vec_flgs.
 //***********************************************************//
-qkcompile(string command, vector<string> arguments, vector<string> flags)
+qkcompile(string command, vector<string> arguments, vector<string> flags) : Command(arguments)
 {
 	set_base_name(command);
 	get_flgs(flags);
@@ -149,6 +150,8 @@ void script_call()
 	return;
 
 }
+
+
 
 
 }; //end of class

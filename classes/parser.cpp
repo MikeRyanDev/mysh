@@ -3,6 +3,7 @@
 #include "command.cpp"
 #include "commander.cpp"
 #include "shell-error.cpp"
+#include "qkcompile.cpp"
 #include <string.h>
 #include <string>
 #include <vector>
@@ -197,7 +198,20 @@ public:
                 // auto r = commands.resolve( this->cmdName, this->cmdArgs );
                 // this->command = &r;
                 vector<char> flags;
-                this->command = new ExternalCommand( this->cmdName, this->cmdArgs, flags );
+                vector<string> moreFlags;
+
+                size_t foundC = this->cmdName.find(".c");
+                size_t foundCpp = this->cmdName.find(".cpp");
+
+                if(foundC == string::npos || foundCpp == string::npos)
+                {
+                    this->command = new qkcompile(this->cmdName, this->cmdArgs, moreFlags );
+                }
+                else
+                {
+                    this->command = new ExternalCommand( this->cmdName, this->cmdArgs, flags );
+                }
+                
             }
 
 
