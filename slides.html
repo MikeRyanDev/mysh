@@ -4,7 +4,7 @@
     <title>mysh slides</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/reveal.js/2.6.2/css/reveal.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/reveal.js/2.6.2/css/theme/simple.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/reveal.js/2.6.2/css/theme/default.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/reveal.js/2.6.2/lib/js/head.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/reveal.js/2.6.2/lib/js/html5shiv.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/reveal.js/2.6.2/lib/js/classList.js"></script>
@@ -21,7 +21,7 @@
       </section>
       <section>
 
-<h2>Software Engineering Approach for the Shell's Design</h2>
+<h3>Software Engineering Approach for the Shell's Design</h3>
 
 <li>Larger group let us focus on code structure and maintainability when creating our implementation of mysh</li>
 <li>We took an object-oriented approach and wrote our implementation in C++11</li>
@@ -29,7 +29,7 @@
       </section>
       <section>
 
-<h2>Core Concepts</h2>
+<h3>Core Concepts</h3>
 
 <ul>
   <li>Dependency Injection</li>
@@ -40,7 +40,7 @@
       </section>
       <section>
 
-<h2>Dependency Injection</h2>
+<h3>Dependency Injection</h3>
 
 <ul>
   <li>To put it simply, dependency injection (DI) let us write our application modularly</li>
@@ -51,7 +51,7 @@
       </section>
       <section>
 
-<h2>Inversion of Control</h2>
+<h3>Inversion of Control</h3>
 
 <ul>
   <li>The concept powering that "central component"</li>
@@ -75,7 +75,7 @@ int main(){
       </section>
       <section>
 
-<h2>Separation of Concerns</h2>
+<h3>Separation of Concerns</h3>
 
 <ul>
   <li>We knew that a solid, object-oriented approach to the software requirements would let us solve "hard" problems with ease
@@ -93,7 +93,7 @@ int main(){
       </section>
       <section>
 
-<h2>Shell Class</h2>
+<h3>Shell Class</h3>
 
 <ul>
   <li>Provides a very simple Read-Evaluate-Print Loop (REPL)</li>
@@ -105,7 +105,7 @@ int main(){
       <section>
         <section>
 
-<h2>Parser Class</h2>
+<h3>Parser Class</h3>
 
 <ul>
   <li>This is where the bulk of our implementation's complexity exists</li>
@@ -133,7 +133,7 @@ int main(){
       </section>
       <section>
 
-<h2>Command Class</h2>
+<h3>Command Class</h3>
 
 <ul>
   <li>A template / parent class that forces a command to adhere to a standard API</li>
@@ -145,7 +145,7 @@ int main(){
       </section>
       <section>
 
-<h2>IoC Container Class</h2>
+<h3>IoC Container Class</h3>
 
 <ul>
   <li>Implementation really isn't as complex as you would expect</li>
@@ -163,7 +163,7 @@ int main(){
       </section>
       <section>
 
-<h2>Shell Error Class</h2>
+<h3>Shell Error Class</h3>
 <ul>
   <li>We heavily use C++'s try, catch, and throw syntax to make error handling clear and easy to follow</li>
   <li>Normally, there would be a class for each error type the command might encounter</li>
@@ -174,7 +174,7 @@ int main(){
       </section>
       <section>
 
-<h2>Reflections on Design</h2>
+<h3>Reflections on Design</h3>
 <ul>
   <li>Worked well for us when developing mysh</li>
   <li>Makes the codebase easy to ready and -- if required -- makes adding new functionality to the shell rather straightforward</li>
@@ -183,7 +183,7 @@ int main(){
       </section>
       <section>
 
-<h2>Regarding our Development Process</h2>
+<h3>Regarding our Development Process</h3>
 <ul>
   <li>Ended up using git as our version control system instead of Google Drive</li>
   <li>Git let us easily work on the same body of code without worrying about overwrites or merging</li>
