@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include <vector>
 
@@ -10,7 +12,7 @@ private:
 	vector<char> flags;
 public:
 	Command( vector<string> args ){
-
+		this->arguments = args;
 	}
 	virtual string execute();
 };
