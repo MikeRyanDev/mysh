@@ -3,6 +3,7 @@
 #include "command.cpp"
 #include "commander.cpp"
 #include "shell-error.cpp"
+#include <string.h>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -120,7 +121,7 @@ private:
             strtok(line, ".");
             splcmd = strtok(NULL, ".");
 
-            if((splcmd == "c") || (splcmd == "cpp"))
+            if( strncmp(splcmd, "c") == 0 || strncmp(splcmd, "cpp") == 0)
                 iscfile = true;
         }
     }
@@ -131,14 +132,7 @@ public:
     *
     * @property {Command} command
     */
-    Command command;
-
-    /**
-    * Error object
-    *
-    * @property {ShellError} error
-    */
-    ShellError error;
+    Command *command;
 
     /**
     * Whether or not the parser has encountered an error
@@ -189,11 +183,10 @@ public:
         resolveQueue();
 
         try{
-            this->command = commands->resolve( this->cmdName, this->cmdArgs );
+            this->command = &(commands.resolve( this->cmdName, this->cmdArgs ));
         }
         catch(const ShellError& resolutionError){
             this->hasError = true;
-            this->error = resolutionError;
         }
     }
     ~Parser(){

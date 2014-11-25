@@ -59,7 +59,7 @@ public:
 		{
 			vector<char> flags;
 			ExternalCommand external(cmdName, args, flags);
-			return (Command *) external;
+			return external;
 		}
 	}
 };

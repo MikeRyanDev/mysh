@@ -1,3 +1,4 @@
+#include "../classes/command.cpp"
 #include <iostream>
 #include <string.h>
 #include <stdio.h>
@@ -13,7 +14,7 @@ using namespace std;
 *
 * @class ExternalCommand
 */
-class ExternalCommand {
+class ExternalCommand : public Command{
 public:
 	/**
 	* Contructor
@@ -25,7 +26,7 @@ public:
 	*
 	* @return {null}
 	*/	
-	ExternalCommand(string cmd, vector<string> args, vector<char> flags){
+	ExternalCommand(string cmd, vector<string> args, vector<char> flags) : Command(args){
 		setCmd(cmd);
 		setFullArgs(args, flags);
 	}
@@ -38,8 +39,12 @@ public:
 	*
 	* @return {null}
 	*/	
-	void execute(){
+	string execute(){
 		executeCommand();
+
+		string ret = "";
+
+		return ret;
 	}
 
 private:

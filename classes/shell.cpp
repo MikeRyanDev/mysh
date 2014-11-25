@@ -41,11 +41,11 @@ public:
 				{
 					FileOutput out(parsedCmd.outputFile, parsedCmd.append);
 
-					out.write( parsedCmd.command.execute() );
+					out.write( parsedCmd.command->execute() );
 				}
 				else
 				{
-					cout << parsedCmd.command.execute();
+					cout << parsedCmd.command->execute();
 				}
 			}
 		}
