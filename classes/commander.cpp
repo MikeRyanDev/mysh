@@ -23,7 +23,7 @@ private:
 	* @param {map<string, Command function>} map
 	* @private
 	*/
-	map<string,Command(*)(vector<string>, vector<string>)> container;
+	map<string,Command(*)(vector<string>)> container;
 public:
 	/**
 	* Method to register a constructor and a command name with the Commander IOC
@@ -34,7 +34,7 @@ public:
 	*
 	* @return {null}
 	*/
-	void enlist( string cmdName, Command(*creator)(vector<string>, vector<string>) ){
+	void enlist( string cmdName, Command(*creator)(vector<string>) ){
 		this->container[cmdName] = creator;
 	}
 
@@ -48,13 +48,13 @@ public:
 	*
 	* @return {Command}
 	*/
-	Command resolve(string cmdName, vector<string> args, vector<string> flags){
+	Command resolve(string cmdName, vector<string> args){
 		auto search = this->container.find(cmdName);
 
 		if( search != this->container.end() )
-			return (*this->container[cmdName])(args, flags);
+			return (*this->container[cmdName])(args);
 		else
-			return new ExternalCommand(cmdName, args, flags);
+			return new ExternalCommand(cmdName, args);
 	}
 };
 

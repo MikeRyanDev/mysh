@@ -1,7 +1,6 @@
-#include "classes/command.h"
-#include "classes/commander.h"
-#include "classes/parser.h"
-#include "classes/shell.h"
+// #include "classes/commander.cpp"
+// #include "classes/parser.cpp"
+#include "classes/shell.cpp"
 #include "commands/cd-command.h"
 #include <string>
 

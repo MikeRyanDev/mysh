@@ -40,13 +40,6 @@ private:
     vector<string> cmdArgs;
 
     /**
-    * Parsed list of the command's flags
-    *
-    * @property {vector<string>} cmdFlags
-    */
-    vector<string> cmdFlags;
-
-    /**
     * Queue of each 'word' in the command block
     *
     * @property {queue<string>} cmdQueue
@@ -88,11 +81,11 @@ private:
             switch(front.front())
             {
                 case '-':
-                    cmdFlags.push_back(front);
+                    cmdArgs.push_back(front);
                     cmdQueue.pop();
                     break;
                 case '>':
-                    cmdFlags.push_back(front);
+                    cmdArgs.push_back(front);
                     cmdQueue.pop();
 
                     cmdArgs.push_back(cmdQueue.front());
@@ -163,7 +156,7 @@ public:
         resolveQueue();
 
         try{
-            this->command = commands->resolve( this->cmdName, this->cmdArgs, this->cmdFlags );
+            this->command = commands->resolve( this->cmdName, this->cmdArgs );
         }
         catch(const ShellError& resolutionError){
             this->hasError = true;
