@@ -33,6 +33,7 @@
 * Our Parsers and Shell classes resolve commands from this IoC container
 * Registering commands is really simple:
 
+````cpp
         class MyCommand : Command { /* Class Logic */ }
     
         int main(){
@@ -42,7 +43,7 @@
             // Resolving a command from the IoC
             IoC.commands.resolve("mycommand", /* constructor arguments */);
         }
-
+````
 ---
 
 # Separation of Concerns
