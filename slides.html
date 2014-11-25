@@ -11,179 +11,195 @@
   <body>
   <div class="reveal">
     <div class="slides">
-      <section data-markdown>
-        <script type="text/template">
+      <section>
 
-# mysh design implementation
-### By Alex, Jacob, Julian, Landan, and Mike
+<h1>mysh design implementation</h1>
+<h2>By Alex, Jacob, Julian, Landan, and Mike</h2>
 
-        </script>
       </section>
-      <section data-markdown>
-        <script type="text/template">
+      <section>
 
-# Software Engineering Approach for the Shell's Design
+<h1>Software Engineering Approach for the Shell's Design</h1>
 
-* Larger group let us focus on code structure and maintainability when creating our implementation of mysh
-* We took an object-oriented approach and wrote our implementation in C++11
+<li>Larger group let us focus on code structure and maintainability when creating our implementation of mysh</li>
+<li>We took an object-oriented approach and wrote our implementation in C++11</li>
 
-        </script>
       </section>
-      <section data-markdown>
-        <script type="text/template">
+      <section>
 
-# Core Concepts
+<h1>Core Concepts</h1>
 
-* Dependency Injection
-* Inversion of Control
-* Separation of Concerns
+<ul>
+  <li>Dependency Injection</li>
+  <li>Inversion of Control</li>
+  <li>Separation of Concerns</li>
+</ul>
 
-        </script>
       </section>
-      <section data-markdown>
-        <script type="text/template">
+      <section>
 
-# Dependency Injection
+<h1>Dependency Injection</h1>
 
-* To put it simply, dependency injection (DI) let us write our application modularly
-* Instead, a single, central component knows about all other components
-* If a component depends on other components, it can resolve these dependencies via the central component
+<ul>
+  <li>To put it simply, dependency injection (DI) let us write our application modularly</li>
+  <li>Instead, a single, central component knows about all other components</li>
+  <li>If a component depends on other components, it can resolve these dependencies via the central component</li>
+</ul>
 
-        </script>
       </section>
-      <section data-markdown>
-        <script type="text/template">
+      <section>
 
-# Inversion of Control
+<h1>Inversion of Control</h1>
 
-* The concept powering that "central component"
-* We call this component our IoC container, and we register all available internal commands with the IoC container
-* Our Parsers and Shell classes resolve commands from this IoC container
-* Registering commands is really simple:
+<ul>
+  <li>The concept powering that "central component"</li>
+  <li>We call this component our IoC container, and we register all available internal commands with the IoC container</li>
+  <li>Our Parsers and Shell classes resolve commands from this IoC container</li>
+  <li>Registering commands is really simple:</li>
+</ul>
 
-        class MyCommand : Command { /* Class Logic */ }
+<pre><code data-tim>
+class MyCommand : Command { /* Class Logic */ }
+
+int main(){
+    // Register a command with the IoC
+    IoC.commands.enlist("mycommand", MyCommand);
     
-        int main(){
-            // Register a command with the IoC
-            IoC.commands.enlist("mycommand", MyCommand);
-            
-            // Resolving a command from the IoC
-            IoC.commands.resolve("mycommand", /* constructor arguments */);
-        }
+    // Resolving a command from the IoC
+    IoC.commands.resolve("mycommand", /* constructor arguments */);
+}
+</code></pre>
 
-
-        </script>
       </section>
-      <section data-markdown>
-        <script type="text/template">
+      <section>
 
-# Separation of Concerns
-* We knew that a solid, object-oriented approach to the software requirements would let us solve "hard" problems with ease
-* Four main classes compose the core of our implementation of mysh:
-    1. Shell
-    2. Parser
-    3. Command _(Parent class that all commands inherit form)_
-    4. IoC Container
-    5. Shell Error
+<h1>Separation of Concerns</h1>
 
-        </script>
+<ul>
+  <li>We knew that a solid, object-oriented approach to the software requirements would let us solve "hard" problems with ease
+  <li>Four main classes compose the core of our implementation of mysh:
+    <ol>
+      <li>Shell</li>
+      <li>Parser</li>
+      <li>Command <i>(Parent class that all commands inherit form)</i></li>
+      <li>IoC Container</li>
+      <li>Shell Error</li>
+    </ol>
+  </li>
+</ul>
+
       </section>
-      <section data-markdown>
-        <script type="text/template">
+      <section>
 
-# Shell Class
-* Provides a very simple Read-Evaluate-Print Loop (REPL)
-* When a user types in a command, the Shell creates a Parser to execute the typed command
-* That's it! No more than 30 lines of code
+<h1>Shell Class</h1>
 
-        </script>
+<ul>
+  <li>Provides a very simple Read-Evaluate-Print Loop (REPL)</li>
+  <li>When a user types in a command, the Shell creates a Parser to execute the typed command</li>
+  <li>That's it! No more than 30 lines of code</li>
+</ul>
+
       </section>
-      <section data-markdown>
-        <script type="text/template">
+      <section>
 
-# Parser Class
-* This is where the bulk of our implementation's complexity exists
-* Takes a command string like `ls -l >> files.txt` and parses it into blocks
-* Instead of writing a regular expression for each command, we take a simpler approach
-* Each "block" in the command string is added to a queue. After being parsed into a queue, the above command string would look like this:
-    1. `ls`
-    2. `-l`
-    3. `>>`
-    4. `files.txt`
+<h1>Parser Class</h1>
 
-        </script>
-        <section data-markdown>
-          <script type="text/template">
+<ul>
+  <li>This is where the bulk of our implementation's complexity exists</li>
+  <li>Takes a command string like `ls -l >> files.txt` and parses it into blocks</li>
+  <li>Instead of writing a regular expression for each command, we take a simpler approach</li>
+  <li>Each "block" in the command string is added to a queue. After being parsed into a queue, the above command string would look like this:
+    <ol>
+      <li>ls</li>
+      <li>-l</li>
+      <li>>></li>
+      <li>files.txt</li>
+    </ol>
+  </li>
+</ul>
 
-* Top of the queue is expected to be the name of the command
-* Each subsequent element in the queue is expected to be an argument and is added to a string vector
-* When the parser hits an output operator like `>>`, it halts adding arguments to the string vector and changes output mode accordingly
-* After parsing is completed, the parser sends the command name and arguments to the IoC container to resolve the command as an object, then executes it
+        <section>
+<ul>
+  <li>Top of the queue is expected to be the name of the command
+  <li>Each subsequent element in the queue is expected to be an argument and is added to a string vector
+  <li>When the parser hits an output operator like `>>`, it halts adding arguments to the string vector and changes output mode accordingly
+  <li>After parsing is completed, the parser sends the command name and arguments to the IoC container to resolve the command as an object, then executes it
+</ul>
 
-          </script>
         </section>
       </section>
-      <section data-markdown>
-        <script type="text/template">
+      <section>
 
-# Command Class
-* A template / parent class that forces a command to adhere to a standard API
-* All commands implement the same constructor signature, where the constructor accepts a string vector of arguments as well as the original command string
-* All commands implement an execute method that returns a string where that string is the output of executing the method
-* Returning a string let's other parts of the application handle output, rather than the command objects
+<h1>Command Class</h1>
 
-        </script>
+<ul>
+  <li>A template / parent class that forces a command to adhere to a standard API</li>
+  <li>All commands implement the same constructor signature, where the constructor accepts a string vector of arguments as well as the original command string</li>
+  <li>All commands implement an execute method that returns a string where that string is the output of executing the method</li>
+  <li>Returning a string let's other parts of the application handle output, rather than the command objects</li>
+</ul>
+
       </section>
-      <section data-markdown>
-        <script type="text/template">
+      <section>
 
-# IoC Container Class
-* Implementation really isn't as complex as you would expect
-* Each command is enlisted by storing the command name and the constructor of the class in a map
-* Command resolution happens like this:
-    1. Does the command name end in '.cpp' or '.c' ? Return a QuickCompile command
-    2. Does the command name end in '.sh' ? Return a ShellScript command
-    3. Does the map of internal commands contain the command name? Return the correct command
-    4. If the command name does not satisfy any of the above conditions, return an External command
+<h1>IoC Container Class</h1>
 
-        </script>
+<ul>
+  <li>Implementation really isn't as complex as you would expect</li>
+  <li>Each command is enlisted by storing the command name and the constructor of the class in a map</li>
+  <li>Command resolution happens like this:
+    <ol>
+      <li>Does the command name end in '.cpp' or '.c' ? Return a QuickCompile command</li>
+      <li>Does the command name end in '.sh' ? Return a ShellScript command</li>
+      <li>Does the map of internal commands contain the command name? Return the correct command</li>
+      <li>If the command name does not satisfy any of the above conditions, return an External command</li>
+    </ol>
+  </li>
+</ul>
+
       </section>
-      <section data-markdown>
-        <script type="text/template">
+      <section>
 
-# Shell Error Class
-* We heavily use C++'s `try`, `catch`, and `throw` syntax to make error handling clear and easy to use
-* Normally, there would be a class for each error type the command might encounter
-* Software requirements for mysh only required one error, and the output is the same for all errors, thus only one error handling class
+<h1>Shell Error Class</h1>
+<ul>
+  <li>We heavily use C++'s try, catch, and throw syntax to make error handling clear and easy to follow</li>
+  <li>Normally, there would be a class for each error type the command might encounter</li>
+  <li>Software requirements for mysh only required one error, and the output is the same for all errors, thus only one error handling class</li>
+</ul>
 
 
-        </script>
       </section>
-      <section data-markdown>
-        <script type="text/template">
+      <section>
 
-# Reflections on Design
-* Worked well for us when developing mysh
-* Makes the codebase easy to ready and -- if required -- makes adding new functionality to the shell rather straightforward
+<h1>Reflections on Design</h1>
+<ul>
+  <li>Worked well for us when developing mysh</li>
+  <li>Makes the codebase easy to ready and -- if required -- makes adding new functionality to the shell rather straightforward</li>
+</ul>
 
-        </script>
       </section>
-      <section data-markdown>
-        <script type="text/template">
+      <section>
 
-# Regarding our Development Process
-* Ended up using git as our version control system instead of Google Drive
-* Git let us easily work on the same body of code without worrying about overwrites or merging
-* Hosted our git repository on Github. Full source code and slides for our shell can be found at https://github.com/MikeRyanDesigns/mysh
-* Github let us visually view changes in the source code as well as create issues that were assigned to team members throughout the lifecycle of the development process
+<h1>Regarding our Development Process</h1>
+<ul>
+  <li>Ended up using git as our version control system instead of Google Drive</li>
+  <li>Git let us easily work on the same body of code without worrying about overwrites or merging</li>
+  <li>Hosted our git repository on Github. Full source code and slides for our shell can be found at https://github.com/MikeRyanDesigns/mysh</li>
+  <li>Github let us visually view changes in the source code as well as create issues that were assigned to team members throughout the lifecycle of the development process</li>
+</ul>
 
-        </script>
       </section>
     </div>
   </div>
 
   <script type="text/javascript">
-    Reveal.initialize();
+Reveal.initialize({
+    dependencies: [
+        // Syntax highlight for <code> elements
+        { src: '//cdnjs.cloudflare.com/ajax/libs/reveal.js/2.6.2/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+
+    ]
+});
   </script>
   </body>
 </html>
