@@ -24,8 +24,8 @@ class qkcompile{
 
 private:
 
-string cmd_blk1; 	//command block #1
-string cmd_blk2; 	//command block #2
+string cmd_blk1; 	//command block #1 - command for compiling with gcc/g++
+string cmd_blk2; 	//command block #2 - command for calling the newly compiled program
 string base_name;	// file name without the extension
 string c_type;		//file type (c or cpp)
 string all_args;	//string containing all arguments seperated by whitespace
@@ -71,7 +71,12 @@ qkcompile(string command, vector<string> arguments, vector<string> flags)
 private:
 
 
-
+//***********************************************************//
+//	qkcompile Class function - create_command_blocks()
+//	args: string cmd, string flgs, string args
+//	return: none
+//	description: creates appropriate commands to compile C code
+//***********************************************************//
 void create_command_blocks(string cmd, string flgs, string args)
 {
 	if( c_type == "c")
@@ -81,8 +86,6 @@ void create_command_blocks(string cmd, string flgs, string args)
 
 	cmd_blk2 += "./"+ base_name + " " + flgs + " " + args;
 
-	cout<<cmd_blk1<<endl;
-	cout<<cmd_blk2<<endl;
 
 }
 
