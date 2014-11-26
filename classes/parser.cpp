@@ -171,7 +171,7 @@ public:
     Parser(string cmdBlock, Commander &commands){
         strcpy(line, cmdBlock.c_str()); // converts cmdBlock into line array
         splcmd = strtok(line," "); // assigns a word from the command input to the splcmd
-        this->error = false;
+        this->hasError = false;
 
         while(splcmd != NULL)
         {
@@ -180,7 +180,16 @@ public:
         };
 
         resolveQueue();
+        resolveCommand();        
+    }
 
+    /**
+    * Executes the command
+    *
+    * @method executeCommand
+    * @return {null}
+    */
+    void resolveCommand(){
         try{
             if(this->cmdName == "cd")
             {
@@ -221,6 +230,7 @@ public:
             this->hasError = true;
         }
     }
+
     ~Parser(){
         this->splcmd = NULL;
     }
