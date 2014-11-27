@@ -1,5 +1,5 @@
 # mysh design implementation
-### By Alex, Jacob, Julian, Landan, and Mike
+### By Andrew, Jacob, Julian, Landan, and Mike
 
 ---
 
