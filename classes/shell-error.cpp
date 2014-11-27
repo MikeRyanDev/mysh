@@ -9,6 +9,11 @@ class ShellError
 public:
 	string name;
 	string message;
+
+	ShellError(){
+		this->name = "mysh";
+		this->message = "Error detected";
+	};
 	
 	ShellError(string errorName, string errorMessage){
 		name = errorName;

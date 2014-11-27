@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../classes/command.cpp"
+#include "../classes/shell-error.cpp"
 #include <string>
 #include <vector>
 #include "unistd.h"
@@ -9,6 +10,13 @@
 
 using namespace std;
 
+/**
+* Command to change the current directory during shell execution
+*
+* @class cdCommand
+* @extends Command
+* @module commands
+*/
 class cdCommand : public Command{
 public:
 	cdCommand( vector<string> args ) : Command(args){
@@ -16,18 +24,15 @@ public:
 	};
 
 	virtual string execute(){
-		string output;
 		int error;
 
 		if(this->arguments.empty())
 		{
 			struct passwd *pw = getpwuid(getuid());
 
-			output = string(pw->pw_dir);
+			string directory(pw->pw_dir);
 
-			chdir(output.c_str());
-
-			output = "";
+			chdir(directory.c_str());
 		}
 		else
 		{
@@ -35,18 +40,14 @@ public:
 
 			if(error == -1)
 			{
-				output = "mysh: Error detected";
-			}
-			else
-			{
-				output = "";
+				throw ShellError();
 			}
 		}
 
-		return output;
+		return "";
 	};
 
-	static Command create(vector<string> args){
-		return cdCommand(args);
+	static Command *create(vector<string> args){
+		return new cdCommand(args);
 	};
 };

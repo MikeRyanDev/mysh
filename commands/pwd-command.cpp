@@ -14,10 +14,10 @@ public:
 	virtual string execute(){
 		string cwd(getcwd(NULL,0));
 
-		return cwd;
+		return cwd + "\n";
 	}
 
-	static Command create(vector<string> args){
-		return pwdCommand(args);
+	static Command *create(vector<string> args){
+		return new pwdCommand(args);
 	};
 };

@@ -11,8 +11,12 @@ public:
 	}
 
 	virtual string execute(){
-		string version = "mysh version 1.0.0 Copyright 2014";
+		string version = "mysh version 1.0.0 Copyright 2014\n";
 
 		return version;
 	}
+
+	static Command *create(vector<string> args){
+		return new verCommand(args);
+	};
 };

@@ -2,7 +2,7 @@
 //	File: qkcompile.cpp
 //	Author: Landan M Young Jackson
 //***********************************************************//
-
+#pragma once
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +10,7 @@
 #include <unistd.h> /*for fork*/
 #include <sys/types.h> /*for pid_t*/
 #include <sys/wait.h> /*for wait*/
+#include "command.cpp"
 #include <string>
 #include <vector>
 
@@ -18,7 +19,7 @@
 using namespace std;
 
 
-class qkcompile{
+class qkcompile : public Command{
 
 
 
@@ -41,7 +42,7 @@ public:
 //	description: will assign values to the member vars
 //	command, vec_args, vec_flgs.
 //***********************************************************//
-qkcompile(string command, vector<string> arguments, vector<string> flags)
+qkcompile(string command, vector<string> arguments, vector<string> flags) : Command(arguments)
 {
 	set_base_name(command);
 	get_flgs(flags);
@@ -165,6 +166,13 @@ void script_call()
 	system(cmd_blk1.c_str());
 	system(cmd_blk2.c_str());
 	
+}
+
+string execute()
+{
+	string output = "";
+
+	return output;
 }
 
 

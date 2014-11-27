@@ -28,7 +28,7 @@ public:
 	*
 	* @return {null}
 	*/	
-	ExternalCommand(string cmd, vector<string> args, vector<char> flags) : Command(args){
+	ExternalCommand(string cmd, vector<string> args) : Command(args){
 		// setCmd(cmd);
 		// setFullArgs(args, flags);
 		createCommandBlock(cmd, args);
@@ -43,7 +43,7 @@ public:
 	* @return {null}
 	*/	
 	string execute(){
-		executeCommand();
+		system(cmdBlock.c_str());
 
 		string ret = "";
 
@@ -51,66 +51,6 @@ public:
 	}
 
 private:
-	/**
-	* Forks new process and executes command _cmd with arguments _args
-	*
-	* @private
-	*
-	* @return {null}
-	*/		
-	void executeCommand(){
-		// char * const cmd = getCmd();
-		// char * const * args = getFullArgs();
-		// //forks process
-		// int id = fork();
-
-		// //if process is child, execute full command
-		// if(id == 0) {
-		// 	execvp(cmd, args);
-		// }
-
-		system(cmdBlock.c_str());
-	}
-
-	/**
-	* Sets private char array _cmd 
-	*
-	* @param {string} cmd command name
-	* @private
-	*
-	* @return {null}
-	*/	
-	// void setCmd(string cmd){
-	// 	_cmd = strdup(cmd.c_str());
-	// }
-
-	/**
-	* Sets private char pointer array _args 
-	*
-	* @param {vector<string>} args arguments in the command
-	* @param {vector<char>} flags flags in the command
-	* @private
-	*
-	* @return {null}
-	*/	
-	// void setFullArgs(vector<string> args, vector<char> flags){
-	// 	_args  = new char*[args.size() + flags.size()];
-
-	// 	vector<string>::iterator i = args.begin();
-	// 	int count = 0;
-
-	// 	_args[0] = strdup(getCmd());
-
-	// 	for(; i != args.end(); i++){
-	// 		_args[count] = strdup((*i).c_str());
-	// 		count++;			
-	// 	}
-	// 	vector<char>::iterator k = flags.begin();
-	// 	for(; k != flags.end(); k++){
-	// 		_args[count] = strdup(makeFlagArg(*k));
-	// 		count++;
-	// 	}
-	// }
 
 	void createCommandBlock(string name, vector<string> args){
 		
@@ -122,58 +62,7 @@ private:
 		}
 	};
 
-	/**
-	* Appends '-' to flag char. Returns char array  
-	*
-	* @param {const char &} c flag char
-	* @private
-	*
-	* @return {char *}
-	*/	
-	// char *makeFlagArg(const char &c){
-	// 	char *tmp = new char[3];
-	// 	tmp[0] = '-';
-	// 	tmp[1] = c;
-	// 	tmp[2] = '\0';
-	// 	return tmp;
-	// }
-
-	/**
-	* Gets private char array _cmd 
-	*
-	* @private
-	*
-	* @return {char *}
-	*/	
-	// char * const getCmd(){
-	// 	return _cmd;
-	// }
-
-	/**
-	* Gets private char pointer array _args 
-	*
-	* @private
-	*
-	* @return {char * const*}
-	*/	
-	// char * const* getFullArgs(){
-	// 	return _args;
-	// }
-
 private:
-	/**
-	* Internal char array of command name
-	*
-	* @private
-	*/
-	// char * _cmd;
-
-	/**
-	* Internal char array array of arguments
-	*
-	* @private
-	*/
-	// char ** _args;
 
 	string cmdBlock;
 };

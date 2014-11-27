@@ -3,23 +3,16 @@
 #include "command.cpp"
 #include "commander.cpp"
 #include "shell-error.cpp"
-#include "qkcompile.cpp"
-#include <string.h>
 #include <string>
 #include <vector>
-#include <iostream>
-#include <stdlib.h>
-#include <stdio.h>
 #include <queue>
 #include <cstring> //needed for linux
-#include "../commands/cd-command.cpp"
-#include "../commands/pwd-command.cpp"
-#include "../commands/ver-command.cpp"
-#include "../commands/external-command.cpp"
 #define MAX_CHAR 257 //defines the max chars in a char array
 
 
 using namespace std;
+
+extern Commander commands;
 
 class Parser
 {
@@ -91,19 +84,9 @@ private:
                     cmdQueue.pop();
                     break;
                 case '>':
-                    if(front == ">")
+                    if(front == ">" || front == ">>")
                     {
-                        append = false;
-                        cmdQueue.pop();
-
-                        outputFile = cmdQueue.front();
-                        cmdQueue.pop();
-                        keepResolving = false;
-                        isredirect = true;
-                    }
-                    else if(front == ">>")
-                    {
-                        append = true;
+                        append = ( front == ">>" );
                         cmdQueue.pop();
 
                         outputFile = cmdQueue.front();
@@ -131,13 +114,6 @@ public:
     * @property {Command} command
     */
     Command *command;
-
-    /**
-    * Whether or not the parser has encountered an error
-    *
-    * @property {boolean} hasError
-    */
-    bool hasError;
 
     /**
     * Determine whether or not the command is a redirection
@@ -168,10 +144,9 @@ public:
     bool iscfile;
 
     
-    Parser(string cmdBlock, Commander &commands){
+    Parser(string cmdBlock){
         strcpy(line, cmdBlock.c_str()); // converts cmdBlock into line array
         splcmd = strtok(line," "); // assigns a word from the command input to the splcmd
-        this->hasError = false;
 
         while(splcmd != NULL)
         {
@@ -182,53 +157,9 @@ public:
         resolveQueue();
         resolveCommand();        
     }
-
-    /**
-    * Executes the command
-    *
-    * @method executeCommand
-    * @return {null}
-    */
+    
     void resolveCommand(){
-        try{
-            if(this->cmdName == "cd")
-            {
-                this->command = new cdCommand( this->cmdArgs );
-            }
-            else if(this->cmdName == "pwd")
-            {
-                this->command = new pwdCommand( this->cmdArgs );
-            }
-            else if(this->cmdName == "ver")
-            {
-                this->command = new verCommand( this->cmdArgs );
-            }
-            else
-            {
-                // auto r = commands.resolve( this->cmdName, this->cmdArgs );
-                // this->command = &r;
-                vector<char> flags;
-                vector<string> moreFlags;
-
-                size_t foundC = this->cmdName.find(".c");
-                size_t foundCpp = this->cmdName.find(".cpp");
-
-                if(foundC != string::npos || foundCpp != string::npos)
-                {
-                    this->command = new qkcompile(this->cmdName, this->cmdArgs, moreFlags );
-                }
-                else
-                {
-                    this->command = new ExternalCommand( this->cmdName, this->cmdArgs, flags );
-                }
-                
-            }
-
-
-        }
-        catch(const ShellError& resolutionError){
-            this->hasError = true;
-        }
+        this->command = commands.resolve(this->cmdName, this->cmdArgs);
     }
 
     ~Parser(){

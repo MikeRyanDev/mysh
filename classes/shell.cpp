@@ -1,3 +1,4 @@
+#pragma once
 #include "commander.cpp"
 #include "parser.cpp"
 #include "file-output.cpp"
@@ -10,45 +11,85 @@ class Shell
 {
 public:
 	Commander commands;
+	string shellName = "mysh";
+
+	void run(int argc, char* argv[]){
+		if(argc >= 2)
+		{
+			string inputFile(argv[1]);
+
+			this->runBatchFile( inputFile.substr(1, inputFile.length() - 2) );
+		}
+		else
+		{
+			this->runInteractively();
+		}
+	};
 	
 	
-	void run(){
+	void runInteractively(){
 		
 		string cmdBlock;
 		bool stop = false;
 
 		while(! stop){
-			cout << "mysh> ";
+			cout << this->shellName << "> ";
 			getline(cin, cmdBlock);
 
-			if(cmdBlock.length() == 0)
+			if(cmdBlock.length() != 0)
 			{
-				
+				stop = this->executeCommand(cmdBlock);
 			}
-			else if(cmdBlock == "exit")
+		}
+	};
+
+	void runBatchFile(string fileName){
+		string output = "";
+		string line;
+		ifstream infile(fileName);
+		bool stop = false;
+
+		if(! infile)
+		{
+			cout << "mysh: Error detected" << endl;
+			exit(0);
+		}
+
+		while(getline(infile, line) && ! stop)
+		{
+			if(line.length() != 0)
 			{
-				stop = true;
-				cout << "Goodbye!" << endl;
+				cout << line << endl;
+				stop = this->executeCommand(line);
+			}
+
+		}
+	};
+
+	bool executeCommand(string cmdBlock){
+		Parser parsedCmd(cmdBlock);
+				
+		try{
+			string output = parsedCmd.command->execute();
+
+			if(parsedCmd.isredirect)
+			{
+				FileOutput out(parsedCmd.outputFile, parsedCmd.append);
+
+				out.write( output );
 			}
 			else
 			{
-				Parser parsedCmd(cmdBlock, this->commands);
-
-				if(parsedCmd.hasError)
-				{
-					cout << "mysh: Error detected" << endl;
-				}
-				else if(parsedCmd.isredirect)
-				{
-					FileOutput out(parsedCmd.outputFile, parsedCmd.append);
-
-					out.write( parsedCmd.command->execute() );
-				}
-				else
-				{
-					cout << parsedCmd.command->execute() << endl;
-				}
+				cout << output;
 			}
+
+			return parsedCmd.command->shouldExit;
+		}
+		catch(const ShellError& executionError)
+		{
+			cout << executionError.name << ": " << executionError.message << endl;
+
+			return false; // Don't stop the shell on error
 		}
 	};
 };

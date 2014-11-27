@@ -1,9 +1,9 @@
-#ifndef COMMANDER_CPP
-#define COMMANDER_CPP
+#pragma once
 #include <map>
 #include <string>
 #include <vector>
 #include "command.cpp"
+#include "qkcompile.cpp"
 #include "../commands/external-command.cpp"
 
 using namespace std;
@@ -13,6 +13,7 @@ using namespace std;
 * creator functions. 
 *
 * @class Commander
+* @module classes
 */
 class Commander
 {
@@ -23,7 +24,7 @@ private:
 	* @param {map<string, Command function>} map
 	* @private
 	*/
-	map<string,Command(*)(vector<string>)> container;
+	map<string,Command *(*)(vector<string>)> container;
 public:
 	/**
 	* Method to register a constructor and a command name with the Commander IOC
@@ -34,7 +35,7 @@ public:
 	*
 	* @return {null}
 	*/
-	void enlist( string cmdName, Command(*creator)(vector<string>) ){
+	void enable( string cmdName, Command *(*creator)(vector<string>) ){
 		this->container[cmdName] = creator;
 	}
 
@@ -48,21 +49,31 @@ public:
 	*
 	* @return {Command}
 	*/
-	Command resolve(string cmdName, vector<string> args){
+	Command *resolve(string cmdName, vector<string> cmdArgs){
 		auto search = this->container.find(cmdName);
 
-		if( search != this->container.end() )
+		if(search != this->container.end())
 		{
-			return (*this->container[cmdName])(args);
+			return (*this->container[cmdName])(cmdArgs);
 		}
 		else
 		{
-			cout << endl << "Found the command: " << cmdName << endl;
+			// auto r = commands.resolve( this->cmdName, this->cmdArgs );
+			// this->command = &r;
 			vector<char> flags;
-			ExternalCommand external(cmdName, args, flags);
-			return external;
+			vector<string> moreFlags;
+
+			size_t foundC = cmdName.find(".c");
+			size_t foundCpp = cmdName.find(".cpp");
+
+			if(foundC != string::npos || foundCpp != string::npos)
+			{
+				return new qkcompile(cmdName, cmdArgs, moreFlags );
+			}
+			else
+			{
+				return new ExternalCommand( cmdName, cmdArgs );
+			} 
 		}
 	}
 };
-
-#endif

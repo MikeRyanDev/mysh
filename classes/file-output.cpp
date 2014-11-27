@@ -1,5 +1,7 @@
+#pragma once
 #include <fstream>
 #include <string>
+#include "shell-error.cpp"
 
 using namespace std;
 
@@ -26,7 +28,10 @@ public:
 			fs.open(outf, fstream::in | fstream::out | fstream::trunc);
 		}
 
-		fs << endl << output;
+		if( fs.good() )
+			fs << endl << output;
+		else
+			throw ShellError();
 
 		fs.close();
 	}

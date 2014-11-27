@@ -9,14 +9,11 @@ class Command
 {
 public:
 	vector<string> arguments;
-	vector<char> flags;
+	bool shouldExit;
 
 	Command( vector<string> args ){
 		this->arguments = args;
+		this->shouldExit = false;
 	}
-	virtual string execute(){
-		string ret = "mysh: Error detected!";
-
-		return ret;
-	};
+	virtual string execute() = 0;
 };
