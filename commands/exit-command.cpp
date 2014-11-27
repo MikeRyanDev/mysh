@@ -6,6 +6,13 @@
 
 using namespace std;
 
+/**
+* Command to send an exit signal to the mysh shell
+*
+* @class exitCommand
+* @extends Command
+* @module commands
+*/
 class exitCommand : public Command{
 public:
 	exitCommand( vector<string> args ) : Command(args){

@@ -82,33 +82,23 @@ private:
 		{
 			string front = cmdQueue.front();
 
-			switch(front.front())
+			if(front == ">" || front == ">>")
 			{
-				case '-':
-					cmdArgs.push_back(front);
-					cmdQueue.pop();
-					break;
-				case '>':
-					if(front == ">" || front == ">>")
-					{
-						append = ( front == ">>" );
-						cmdQueue.pop();
-						if(cmdQueue.empty()) throw ShellError();
+				this->append = ( front == ">>" );
+				cmdArgs.push_back(front);
+				cmdQueue.pop();
+				if(cmdQueue.empty()) throw ShellError();
 
-						outputFile = cmdQueue.front();
-						cmdQueue.pop();
-						keepResolving = false;
-						isRedirect = true;
-					}
-					else
-					{
-						cmdArgs.push_back(front);
-						cmdQueue.pop();
-					}
-					break;
-				default:
-					cmdArgs.push_back(front);
-					cmdQueue.pop();
+				this->outputFile = cmdQueue.front();
+				cmdArgs.push_back(this->outputFile);
+				cmdQueue.pop();
+				keepResolving = false;
+				this->isRedirect = true;
+			}
+			else
+			{
+				cmdArgs.push_back(front);
+				cmdQueue.pop();
 			}
 		}
 	}

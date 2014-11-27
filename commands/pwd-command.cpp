@@ -6,6 +6,13 @@
 #include <iostream>
 #include <unistd.h>
 
+/**
+* Command to print the path of the current working directory
+*
+* @class pwdCommand
+* @extends Command
+* @module commands
+*/
 class pwdCommand : public Command{
 public:
 	pwdCommand( vector<string> args ) : Command(args){
