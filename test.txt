@@ -1,2 +1,4 @@
 
-mysh version 1.0.0 Copyright 2014
+/Users/mikeryan/Repos/mysh
+
+/Users/mikeryan/Repos/mysh

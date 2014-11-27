@@ -4,6 +4,8 @@
 #include "file-output.cpp"
 #include <iostream>
 #include <sstream>
+#include <string>
+#include <regex>
 
 using namespace std;
 
@@ -67,29 +69,35 @@ public:
 	};
 
 	bool executeCommand(string cmdBlock){
-		Parser parsedCmd(cmdBlock);
-				
-		try{
-			string output = parsedCmd.command->execute();
+		regex re("[;]+");
+		sregex_token_iterator it(cmdBlock.begin(), cmdBlock.end(), re, -1);
+		sregex_token_iterator reg_end;
 
-			if(parsedCmd.isredirect)
-			{
-				FileOutput out(parsedCmd.outputFile, parsedCmd.append);
-
-				out.write( output );
-			}
-			else
-			{
-				cout << output;
-			}
-
-			return parsedCmd.command->shouldExit;
-		}
-		catch(const ShellError& executionError)
+		for(; it != reg_end; ++it)
 		{
-			cout << executionError.name << ": " << executionError.message << endl;
+			try{
+				Parser parsedCmd(cmdBlock);
+				string output = parsedCmd.command->execute();
 
-			return false; // Don't stop the shell on error
+				if(parsedCmd.isredirect)
+				{
+					FileOutput out(parsedCmd.outputFile, parsedCmd.append);
+
+					out.write( output );
+				}
+				else
+				{
+					cout << output;
+				}
+
+				return parsedCmd.command->shouldExit;
+			}
+			catch(const ShellError& executionError)
+			{
+				cout << executionError.name << ": " << executionError.message << endl;
+
+				return false; // Don't stop the shell on error
+			}
 		}
 	};
 };

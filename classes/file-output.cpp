@@ -29,7 +29,7 @@ public:
 		}
 
 		if( fs.good() )
-			fs << endl << output;
+			fs << output;
 		else
 			throw ShellError();
 
