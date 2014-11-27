@@ -170,7 +170,7 @@ void script_call()
 
 string execute()
 {
-	string output = "";
+	string output = "\n";
 
 	return output;
 }
