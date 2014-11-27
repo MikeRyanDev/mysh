@@ -51,7 +51,7 @@
 * Four main classes compose the core of our implementation of mysh:
     1. Shell
     2. Parser
-    3. Command _(Parent class that all commands inherit form)_
+    3. Command _(Parent class that all commands inherit from)_
     4. IoC Container
     5. Shell Error
 
