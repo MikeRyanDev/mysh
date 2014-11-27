@@ -76,8 +76,18 @@ public:
 
 		for(; it != reg_end; ++it)
 		{
+			string trimmed = it->str();
+			const auto strBegin = it->str().find_first_not_of(" \t");
+			if (strBegin != string::npos){
+
+				const auto strEnd = trimmed.find_last_not_of(" \t");
+				const auto strRange = strEnd - strBegin + 1;
+
+				trimmed = trimmed.substr(strBegin, strRange);
+			}
+
 			try{
-				Parser parsedCmd(it->str());
+				Parser parsedCmd(trimmed);
 				string output = parsedCmd.command->execute();
 
 				if(parsedCmd.isRedirect)
