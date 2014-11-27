@@ -72,14 +72,15 @@ public:
 		regex re("[;]+");
 		sregex_token_iterator it(cmdBlock.begin(), cmdBlock.end(), re, -1);
 		sregex_token_iterator reg_end;
+		bool foundExit = false;
 
 		for(; it != reg_end; ++it)
 		{
 			try{
-				Parser parsedCmd(cmdBlock);
+				Parser parsedCmd(it->str());
 				string output = parsedCmd.command->execute();
 
-				if(parsedCmd.isredirect)
+				if(parsedCmd.isRedirect)
 				{
 					FileOutput out(parsedCmd.outputFile, parsedCmd.append);
 
@@ -90,14 +91,17 @@ public:
 					cout << output;
 				}
 
-				return parsedCmd.command->shouldExit;
+				if( parsedCmd.command->shouldExit ){
+					foundExit = true;
+					break;
+				}
 			}
 			catch(const ShellError& executionError)
 			{
 				cout << executionError.name << ": " << executionError.message << endl;
-
-				return false; // Don't stop the shell on error
 			}
 		}
+
+		return foundExit;
 	};
 };

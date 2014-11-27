@@ -10,6 +10,13 @@ using namespace std;
 
 extern Shell mysh;
 
+/**
+* Command to change the name of the shell prompt
+*
+* @class changeNameCommand
+* @extends Command
+* @module commands
+*/
 class changeNameCommand : public Command{
 public:
 	changeNameCommand( vector<string> args ) : Command(args){

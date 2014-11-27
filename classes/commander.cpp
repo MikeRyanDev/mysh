@@ -58,8 +58,6 @@ public:
 		}
 		else
 		{
-			// auto r = commands.resolve( this->cmdName, this->cmdArgs );
-			// this->command = &r;
 			vector<char> flags;
 			vector<string> moreFlags;
 

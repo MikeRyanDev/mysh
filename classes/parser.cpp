@@ -76,7 +76,7 @@ private:
 		cmdQueue.pop();
 
 		keepResolving = true;
-		isredirect = false;
+		isRedirect = false;
 
 		while(cmdQueue.size() > 0 && keepResolving)
 		{
@@ -94,11 +94,11 @@ private:
 						append = ( front == ">>" );
 						cmdQueue.pop();
 						if(cmdQueue.empty()) throw ShellError();
-						
+
 						outputFile = cmdQueue.front();
 						cmdQueue.pop();
 						keepResolving = false;
-						isredirect = true;
+						isRedirect = true;
 					}
 					else
 					{
@@ -134,9 +134,9 @@ public:
 	/**
 	* Determine whether or not the command is a redirection
 	*
-	* @property {boolean} isredirect
+	* @property {boolean} isRedirect
 	*/
-	bool isredirect;
+	bool isRedirect;
 
 	/**
 	* Determine whether redirection output should append or overwrite file
