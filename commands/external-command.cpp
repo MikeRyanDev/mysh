@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../classes/command.cpp"
+#include "base-command.cpp"
 #include <iostream>
 #include <string.h>
 #include <stdio.h>

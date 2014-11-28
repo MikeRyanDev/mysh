@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../classes/command.cpp"
+#include "base-command.cpp"
 #include <string>
 #include <vector>
 
@@ -18,9 +18,7 @@ public:
 	}
 
 	virtual string execute(){
-		string version = "mysh version 1.0.0 Copyright 2014\n";
-
-		return version;
+		return string("mysh version 1.0.0 Copyright 2014\n");
 	}
 
 	static Command *create(vector<string> args){

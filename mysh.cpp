@@ -4,6 +4,7 @@
 #include "commands/pwd-command.cpp"
 #include "commands/ver-command.cpp"
 #include "commands/exit-command.cpp"
+#include "commands/source-command.cpp"
 #include "commands/change-name-command.cpp"
 #include <string>
 
@@ -18,8 +19,7 @@ int main(int argc, char* argv[])
 	commands.enable("ver", &verCommand::create);
 	commands.enable("exit", &exitCommand::create);
 	commands.enable("name", &changeNameCommand::create);
+	// commands.enable("source", &sourceCommand::create);
 	
 	mysh.run(argc, argv);
-
-	return 0;
 }

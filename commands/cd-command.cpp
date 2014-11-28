@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../classes/command.cpp"
+#include "base-command.cpp"
 #include "../classes/shell-error.cpp"
 #include <string>
 #include <vector>

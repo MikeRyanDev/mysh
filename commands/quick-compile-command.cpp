@@ -10,7 +10,7 @@
 #include <unistd.h> /*for fork*/
 #include <sys/types.h> /*for pid_t*/
 #include <sys/wait.h> /*for wait*/
-#include "command.cpp"
+#include "base-command.cpp"
 #include <string>
 #include <vector>
 

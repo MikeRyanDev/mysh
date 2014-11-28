@@ -11,15 +11,15 @@ using namespace std;
 extern Shell mysh;
 
 /**
-* Command to change the name of the shell prompt
+* Command to source batch files and execute them
 *
-* @class changeNameCommand
+* @class sourceCommand
 * @extends Command
 * @module commands
 */
-class changeNameCommand : public Command{
+class sourceCommand : public Command{
 public:
-	changeNameCommand( vector<string> args ) : Command(args){
+	sourceCommand( vector<string> args ) : Command(args){
 
 	};
 
@@ -28,18 +28,17 @@ public:
 
 		if(this->arguments.empty())
 		{
-			// throw ShellError("Cannot change name", "must supply a new name for the shell");
 			throw ShellError();
 		}
 		else
 		{
-			mysh.shellName = this->arguments[0];
+			mysh.runBatchFile(this->arguments[0]);
 		}
 
 		return output;
 	};
 
 	static Command *create(vector<string> args){
-		return new changeNameCommand(args);
+		return new sourceCommand(args);
 	};
 };

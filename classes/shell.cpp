@@ -1,5 +1,4 @@
 #pragma once
-#include "commander.cpp"
 #include "parser.cpp"
 #include "file-output.cpp"
 #include <iostream>
@@ -9,12 +8,31 @@
 
 using namespace std;
 
+/**
+* Class that reads commands from the shell or a batch file and handles
+* their lifecycle
+*
+* @class Shell
+* @module classes
+*/
 class Shell
 {
 public:
-	Commander commands;
+	/**
+	* The name of the currently active shell, default is `mysh`
+	*
+	* @property {string} shellName
+	*/
 	string shellName = "mysh";
 
+	/**
+	* Runs the shell. If there is not a batch file supplied to the shell at the beginning
+	* of execution, the shell runs interactively.
+	*
+	* @method run
+	* @param {int} argc The count of arguments supplied to mysh. Always at least one.
+	* @param {array} argv The arguments supplied to mysh. First argument is always the name of the executable.
+	*/
 	void run(int argc, char* argv[]){
 		if(argc >= 2)
 		{
@@ -28,7 +46,11 @@ public:
 		}
 	};
 	
-	
+	/**
+	* Provides a very simple REPL to the user at the shell
+	*
+	* @method runInteractively
+	*/
 	void runInteractively(){
 		
 		string cmdBlock;
@@ -45,6 +67,12 @@ public:
 		}
 	};
 
+	/**
+	* Loops through a batchfile and executes each line
+	*
+	* @method runBatchFile
+	* @param {string} fileName The name of the batchfile to execute
+	*/
 	void runBatchFile(string fileName){
 		string output = "";
 		string line;
@@ -54,7 +82,7 @@ public:
 		if(! infile)
 		{
 			cout << "mysh: Error detected" << endl;
-			exit(0);
+			stop = true;
 		}
 
 		while(getline(infile, line) && ! stop)
@@ -68,6 +96,15 @@ public:
 		}
 	};
 
+	/**
+	* Takes a line of semi-colon delimitted commands and creates parsers for each of them.
+	* Then, executes each command and either prints the result to the screen or to an output
+	* file
+	*
+	* @method executeCommand
+	* @param {string} cmdBlock The line of semi-colon delimitted commands
+	* @return {bool} Whether any of the executed commands returned an exit signal
+	*/
 	bool executeCommand(string cmdBlock){
 		regex re("[;]+");
 		sregex_token_iterator it(cmdBlock.begin(), cmdBlock.end(), re, -1);
