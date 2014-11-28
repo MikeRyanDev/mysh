@@ -22,9 +22,9 @@ To build mysh, you'll need a version of G++ that has full support for the C++11 
 ### Building the shell
 
 1. Pull the latest version of mysh: `git clone https://github.com/MikeRyan52/mysh.git mysh`
-2. Change into the mysh director: `cd mysh`
+2. Change into the mysh directory: `cd mysh`
 3. Run make: `make`
-4. You'll be prompted to enter the directory where you mysh to be build. Simply put `.` to sellect the current directory
+4. You'll be prompted to enter the directory where you want mysh to be built. Simply put `.` to select the current directory
 5. Run `./mysh` to launch the shell
 
 ### Building the docs
@@ -35,3 +35,9 @@ To build mysh, you'll need a version of G++ that has full support for the C++11 
 
 ## More Information
 For more information regarding the concepts of building our version of mysh, checkout the [project's homepage](https://mikeryan52.github.io/mysh) or a presentation [on the shell](https://mikeryan52.github.io/mysh/slides.html)
+
+### Extra credit features
+
+1. Change the name of the shell by running `name (newName)`. For example, running `name john` will result in `mysh> ` becoming `john> `
+2. Batch file mode, executed by running `./mysh [batchFile]`
+3. Semi-colon delimitted commands, like `cd; pwd; ver; exit`
