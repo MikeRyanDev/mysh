@@ -64,7 +64,7 @@
   <li>Registering commands is really simple:</li>
 </ul>
 
-<pre><code data-tim>
+<pre><code data-tim class="cpp">
 class MyCommand : Command { /* Class Logic */ }
 Commander commands();
 
@@ -92,7 +92,7 @@ int main(){
     <ol>
       <li>Shell</li>
       <li>Parser</li>
-      <li>Command <i>(Parent class that acts like an interface for all other commands)</i></li>
+      <li>Command</li>
       <li>IoC Container</li>
       <li>Shell Error</li>
     </ol>
@@ -108,35 +108,8 @@ int main(){
   <li>Provides a very simple Read-Evaluate-Print Loop (REPL)</li>
   <li>Also responsible for looping through an input file and parsing it (batch file mode)</li>
   <li>When a user types in a command, the Shell creates a Parser to execute the typed command</li>
-  <li>Performs some parsing by breaking out semicolon delimitted commands and creating parsers for each of them</li>
+  <li>Semicolon delimitted commands are handled by the shell</li>
   <li>Primary source of error handling</li>
-</ul>
-
-        </section>
-        <section>
-
-<h3>Parser Class</h3>
-
-<ul>
-  <li>This is where the bulk of our implementation's complexity exists</li>
-  <li>Takes a command string like `ls -l >> files.txt` and parses it into blocks</li>
-  <li>Instead of writing a regular expression for each command, we take a simpler approach</li>
-  <li>Each "block" in the command string is added to a queue. After being parsed into a queue, the above command string would look like this:
-    <ol>
-      <li>ls</li>
-      <li>-l</li>
-      <li>>></li>
-      <li>files.txt</li>
-    </ol>
-  </li>
-</ul>
-        </section>
-        <section>
-<ul>
-  <li>Top of the queue is expected to be the name of the command
-  <li>Each subsequent element in the queue is expected to be an argument and is added to a string vector
-  <li>When the parser hits an output operator like `>>`, it halts adding arguments to the string vector and changes output mode accordingly
-  <li>After parsing is completed, the parser sends the command name and arguments to the IoC container to resolve the command as an object
 </ul>
 
         </section>
@@ -146,10 +119,10 @@ int main(){
 
 <ul>
   <li>Interface class that provides a standard API for all commands to implement</li>
-  <li>All commands implement an execute method that returns a string where that string is the output of executing the method</li>
-  <li>Returning a string let's other parts of the application handle output, rather than the command objects</li>
+  <li>Requires an execute method that returns the output as a string</li>
+  <li>Returning a string simplifies our output redirection process</li>
 </ul>
-<pre><code data-tim>
+<pre><code data-tim class="cpp">
 class Command{
 public:
   vector<string> arguments;
@@ -169,7 +142,7 @@ public:
 <h3>IoC Container Class</h3>
 
 <ul>
-  <li>Implementation really isn't as complex as you would expect</li>
+  <li>Very simple IoC container implementation</li>
   <li>Each command is enabled by storing the command name and the constructor of the class in a map</li>
   <li>Command resolution happens like this:
     <ol>
@@ -183,9 +156,36 @@ public:
         </section>
         <section>
 
+<h3>Parser Class</h3>
+
+<ul>
+  <li>This is where the bulk of our implementation's complexity exists</li>
+  <li>Takes a command string like `ls -l >> files.txt` and parses it into blocks</li>
+  <li>Simpler approach to parsing instead of regular expressions</li>
+  <li>Each "block" in the command string is added to a queue like this:
+    <ol>
+      <li>ls</li>
+      <li>-l</li>
+      <li>>></li>
+      <li>files.txt</li>
+    </ol>
+  </li>
+</ul>
+        </section>
+        <section>
+<ul>
+  <li>Top of the queue is expected to be the name of the command</li>
+  <li>Every other object in the queue is treated like an argument</li>
+  <li>Output redirectors are detected and handled accordingly</li>
+  <li>After parsing is completed, parser resolves the command from the IoC container</li>
+</ul>
+
+        </section>
+        <section>
+
 <h3>Shell Error Class</h3>
 <ul>
-  <li>We make heav use of C++'s try, catch, and throw syntax to make error handling clear and easy to follow</li>
+  <li>We make heavy use of C++'s try, catch, and throw syntax to make error handling clear and easy to follow</li>
   <li>Normally, there would be a class for each error type the command might encounter</li>
   <li>Software requirements for mysh only required one error</li>
 </ul>
@@ -197,7 +197,7 @@ public:
 <h3>Reflections on Design</h3>
 <ul>
   <li>Worked well for us when developing mysh</li>
-  <li>Makes the codebase easy to ready and -- if required -- makes adding new functionality to the shell rather straightforward</li>
+  <li>Makes the codebase easy to ready and makes adding new functionality to the shell straightforward</li>
   <li>Improvements could be made to operator handling</li>
 </ul>
 
@@ -218,7 +218,7 @@ public:
 <ul>
   <li>Git let us easily work on the same body of code without worrying about overwrites or merging</li>
   <li>Hosted our git repository on Github. Full source code and slides for our shell can be found at https://github.com/MikeRyanDesigns/mysh</li>
-  <li>Github let us visually view changes in the source code as well as create issues that were assigned to team members throughout the lifecycle of the development process</li>
+  <li>Github let us view changes in the source code as well as create issues</li>
 </ul>
 
         </section>
@@ -234,7 +234,7 @@ public:
         </section>
         <section>
 
-<pre><code data-tim>
+<pre><code data-tim class="cpp">
 /**
 * Demo class description
 *
