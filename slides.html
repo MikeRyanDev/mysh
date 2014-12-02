@@ -196,6 +196,26 @@ public:
   <li>Software requirements for mysh only required one error</li>
 </ul>
 
+<h4>Logic in SomeCommand's <code>execute</code> method</h4>
+<pre><code class="cpp">
+if(this->arguments.empty())
+{
+  throw ShellError("Argument not provided", "One argument is required to execute SomeCommand");
+}
+</code></pre>
+
+<h4>Executing SomeCommand</h4>
+<pre><code class="cpp">
+try{
+  cout << someCmd.execute();
+}
+catch(const ShellError& executionError){
+  cout << executionError.name << ": " << executionError.message << endl;
+}
+</code></pre>
+
+Output: <code>Argument not provided: One argument is required to execute SomeCommand</code>
+
         </section>
       </section>
       <section>
