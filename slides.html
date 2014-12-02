@@ -163,14 +163,14 @@ public:
 
 <ul>
   <li>This is where the bulk of our implementation's complexity exists</li>
-  <li>Takes a command string like `ls -l >> files.txt` and parses it into blocks</li>
+  <li>Takes a command string like <code>ls -l >> files.txt</code> and parses it into blocks</li>
   <li>Simpler approach to parsing instead of regular expressions</li>
   <li>Each "block" in the command string is added to a queue like this:
     <ol>
-      <li>ls</li>
-      <li>-l</li>
-      <li>>></li>
-      <li>files.txt</li>
+      <li><code>ls</code></li>
+      <li><code>-l</code></li>
+      <li><code>&gt;&gt;</code></li>
+      <li><code>files.txt</code></li>
     </ol>
   </li>
 </ul>
@@ -233,9 +233,6 @@ public:
   <li>Using a third party parser (in this case Yuidoc, developed at Yahoo) documentation is generated from the source code</li>
   <li>Documentation generation process automated via our makefile</li>
 </ul>
-
-        </section>
-        <section>
 
 <pre><code data-tim class="cpp">
 /**
