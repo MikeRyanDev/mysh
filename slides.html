@@ -17,18 +17,21 @@
       <section>
 <h1>mysh</h1>
 <h2>design implementation</h2>
-<h4>By Alex, Jacob, Julian, Landan, and Mike</h4>
+<h4>Created by Andrew, Jacob, Julian, Landan, and Mike</h4>
 
       </section>
       <section>
 
 <h3>Strategy for the Shell's Design</h3>
 
-<li>Larger group let us focus on code structure and maintainability when creating our implementation of mysh</li>
-<li>We took an object-oriented approach and wrote our implementation in C++11</li>
+<ul>
+  <li>Larger group let us focus on code structure and maintainability when creating our implementation of mysh</li>
+  <li>We took an object-oriented approach and wrote our implementation in C++11</li>
+</ul>
 
       </section>
       <section>
+        <section>
 
 <h3>Core Concepts</h3>
 
@@ -38,75 +41,78 @@
   <li>Separation of Concerns</li>
 </ul>
 
-      </section>
-      <section>
+        </section>
+        <section>
 
 <h3>Dependency Injection</h3>
 
 <ul>
   <li>To put it simply, dependency injection (DI) let us write our application modularly</li>
-  <li>Instead, a single, central component knows about all other components</li>
+  <li>We developed a single, central component that knows about all other components</li>
   <li>If a component depends on other components, it can resolve these dependencies via the central component</li>
 </ul>
 
-      </section>
-      <section>
+        </section>
+        <section>
 
 <h3>Inversion of Control</h3>
 
 <ul>
   <li>The concept powering that "central component"</li>
-  <li>We call this component our IoC container, and we register all available internal commands with the IoC container</li>
+  <li>We call this component our IoC container, and we register all available internal commands with it</li>
   <li>Our Parsers and Shell classes resolve commands from this IoC container</li>
   <li>Registering commands is really simple:</li>
 </ul>
 
 <pre><code data-tim>
 class MyCommand : Command { /* Class Logic */ }
+Commander commands();
 
 int main(){
     // Register a command with the IoC
-    mysh.commands.enlist("mycommand", /* MyCommand constructor */);
+    commands.enable("mycommand", /* MyCommand constructor */);
     
     // Resolving a command from the IoC
-    Command myCmd = mysh.commands.resolve("mycommand", /* constructor arguments */);
+    Command myCmd = commands.resolve("mycommand", /* constructor arguments */);
 
     cout >> myCmd.execute();
 }
 </code></pre>
 
+        </section>
       </section>
       <section>
+        <section>
 
 <h3>Separation of Concerns</h3>
 
 <ul>
-  <li>We knew that a solid, object-oriented approach to the software requirements would let us solve "hard" problems with ease
+  <li>We knew that a solid, object-oriented approach to the software requirements would let us solve "hard" problems easily
   <li>Five main classes compose the core of our implementation of mysh:
     <ol>
       <li>Shell</li>
       <li>Parser</li>
-      <li>Command <i>(Parent class that all commands inherit form)</i></li>
+      <li>Command <i>(Parent class that acts like an interface for all other commands)</i></li>
       <li>IoC Container</li>
       <li>Shell Error</li>
     </ol>
   </li>
 </ul>
 
-      </section>
-      <section>
+        </section>
+        <section>
 
 <h3>Shell Class</h3>
 
 <ul>
   <li>Provides a very simple Read-Evaluate-Print Loop (REPL)</li>
+  <li>Also responsible for looping through an input file and parsing it (batch file mode)</li>
   <li>When a user types in a command, the Shell creates a Parser to execute the typed command</li>
-  <li>That's it! No more than 30 lines of code</li>
-  <li>Same basic design for the shell script command</li>
+  <li>Performs some parsing by breaking out semicolon delimitted commands and creating parsers for each of them</li>
+  <li>Primary source of error handling</li>
 </ul>
 
-      </section>
-      <section>
+        </section>
         <section>
 
 <h3>Parser Class</h3>
@@ -130,51 +136,61 @@ int main(){
   <li>Top of the queue is expected to be the name of the command
   <li>Each subsequent element in the queue is expected to be an argument and is added to a string vector
   <li>When the parser hits an output operator like `>>`, it halts adding arguments to the string vector and changes output mode accordingly
-  <li>After parsing is completed, the parser sends the command name and arguments to the IoC container to resolve the command as an object, then executes it
+  <li>After parsing is completed, the parser sends the command name and arguments to the IoC container to resolve the command as an object
 </ul>
 
         </section>
-      </section>
-      <section>
+        <section>
 
 <h3>Command Class</h3>
 
 <ul>
-  <li>A template / parent class that forces a command to adhere to a standard API</li>
-  <li>All commands implement the same constructor signature, where the constructor accepts a string vector of arguments as well as the original command string</li>
+  <li>Interface class that provides a standard API for all commands to implement</li>
   <li>All commands implement an execute method that returns a string where that string is the output of executing the method</li>
   <li>Returning a string let's other parts of the application handle output, rather than the command objects</li>
 </ul>
+<pre><code data-tim>
+class Command{
+public:
+  vector<string> arguments;
+  bool shouldExit;
+  
+  Command( vector<string> args ){
+    this->arguments = args;
+    this->shouldExit = false;
+  }
 
-      </section>
-      <section>
+  virtual string execute() = 0;
+}
+</code></pre>
+        </section>
+        <section>
 
 <h3>IoC Container Class</h3>
 
 <ul>
   <li>Implementation really isn't as complex as you would expect</li>
-  <li>Each command is enlisted by storing the command name and the constructor of the class in a map</li>
+  <li>Each command is enabled by storing the command name and the constructor of the class in a map</li>
   <li>Command resolution happens like this:
     <ol>
-      <li>Does the command name end in '.cpp' or '.c' ? Return a QuickCompile command</li>
-      <li>Does the command name end in '.sh' ? Return a ShellScript command</li>
       <li>Does the map of internal commands contain the command name? Return the correct command</li>
+      <li>Does the command name end in '.cpp' or '.c' ? Return a QuickCompile command</li>
       <li>If the command name does not satisfy any of the above conditions, return an External command</li>
     </ol>
   </li>
 </ul>
 
-      </section>
-      <section>
+        </section>
+        <section>
 
 <h3>Shell Error Class</h3>
 <ul>
-  <li>We heavily use C++'s try, catch, and throw syntax to make error handling clear and easy to follow</li>
+  <li>We make heav use of C++'s try, catch, and throw syntax to make error handling clear and easy to follow</li>
   <li>Normally, there would be a class for each error type the command might encounter</li>
-  <li>Software requirements for mysh only required one error, and the output is the same for all errors, thus only one error handling class</li>
+  <li>Software requirements for mysh only required one error</li>
 </ul>
 
-
+        </section>
       </section>
       <section>
 
@@ -182,20 +198,69 @@ int main(){
 <ul>
   <li>Worked well for us when developing mysh</li>
   <li>Makes the codebase easy to ready and -- if required -- makes adding new functionality to the shell rather straightforward</li>
+  <li>Improvements could be made to operator handling</li>
 </ul>
 
       </section>
       <section>
+        <section>
 
 <h3>Regarding our Development Process</h3>
 <ul>
-  <li>Ended up using git as our version control system instead of Google Drive</li>
+  <li>Used git as our version control system instead of Google Drive</li>
+  <li>Documentation created colloboratively using documentation comment blocks in our source code</li>
+</ul>
+
+        </section>
+        <section>
+
+<h3>Git and Github</h3>
+<ul>
   <li>Git let us easily work on the same body of code without worrying about overwrites or merging</li>
   <li>Hosted our git repository on Github. Full source code and slides for our shell can be found at https://github.com/MikeRyanDesigns/mysh</li>
   <li>Github let us visually view changes in the source code as well as create issues that were assigned to team members throughout the lifecycle of the development process</li>
 </ul>
 
-      </section>
+        </section>
+        <section>
+
+<h3>Documentation Comment Blocks</h3>
+<ul>
+  <li>In our source code, we annotate our classes with documentation blocks</li>
+  <li>Using a third party parser (in this case Yuidoc, developed at Yahoo) documentation is generated from the source code</li>
+  <li>Documentation generation process automated via our makefile</li>
+</ul>
+
+        </section>
+        <section>
+
+<pre><code data-tim>
+/**
+* Demo class description
+*
+*
+* @class Demo
+*/
+class Demo{
+  /**
+  * Property description
+  *
+  * @property {vector<string>} arguments
+  */
+  vector<string> arguments;
+
+  /**
+  * Method description
+  *
+  * @method simpleMethod
+  * @param {vector<string>} arguments Description of paramter
+  * @return {bool} Description of the return value
+  */
+  bool simpleMethod( vector<string> arguments ){ }
+}
+</code></pre>
+          </section>
+        </section>
     </div>
   </div>
 

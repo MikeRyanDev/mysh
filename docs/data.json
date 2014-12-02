@@ -1,0 +1,728 @@
+{
+    "project": {},
+    "files": {
+        "classes/commander.cpp": {
+            "name": "classes/commander.cpp",
+            "modules": {
+                "classes": 1
+            },
+            "classes": {
+                "Commander": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "classes/file-output.cpp": {
+            "name": "classes/file-output.cpp",
+            "modules": {},
+            "classes": {
+                "FileOutput": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "classes/parser.cpp": {
+            "name": "classes/parser.cpp",
+            "modules": {},
+            "classes": {
+                "Parser": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "classes/shell-error.cpp": {
+            "name": "classes/shell-error.cpp",
+            "modules": {},
+            "classes": {
+                "ShellError": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "commands/base-command.cpp": {
+            "name": "commands/base-command.cpp",
+            "modules": {
+                "commands": 1
+            },
+            "classes": {
+                "Command": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "commands/cd-command.cpp": {
+            "name": "commands/cd-command.cpp",
+            "modules": {},
+            "classes": {
+                "cdCommand": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "commands/change-name-command.cpp": {
+            "name": "commands/change-name-command.cpp",
+            "modules": {},
+            "classes": {
+                "changeNameCommand": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "commands/exit-command.cpp": {
+            "name": "commands/exit-command.cpp",
+            "modules": {},
+            "classes": {
+                "exitCommand": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "commands/external-command.cpp": {
+            "name": "commands/external-command.cpp",
+            "modules": {},
+            "classes": {
+                "ExternalCommand": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "commands/pwd-command.cpp": {
+            "name": "commands/pwd-command.cpp",
+            "modules": {},
+            "classes": {
+                "pwdCommand": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "commands/ver-command.cpp": {
+            "name": "commands/ver-command.cpp",
+            "modules": {},
+            "classes": {
+                "verCommand": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "classes": {
+            "name": "classes",
+            "submodules": {},
+            "classes": {
+                "Commander": 1,
+                "FileOutput": 1,
+                "Parser": 1,
+                "ShellError": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "classes/shell-error.cpp",
+            "line": 7,
+            "description": "A (very) simple representation of an IOC container. Maps command names to\ncreator functions. \n\nExample of creator function:\n\n    class exampleCommand{\n        // Command logic\n        static Command *create(vector<string> args){\n            return new exampleCommand(args);\n        }\n    };\n\nRegistering the command with the IoC:\n\n    Commander commands;\n\n    commands.enable(\"example\", &exampleCommand::create);\n\nResolving the command later:\n\n    Command *exampleCmd = commands.resolve(\"example\", args);"
+        },
+        "commands": {
+            "name": "commands",
+            "submodules": {},
+            "classes": {
+                "Command": 1,
+                "cdCommand": 1,
+                "changeNameCommand": 1,
+                "exitCommand": 1,
+                "ExternalCommand": 1,
+                "pwdCommand": 1,
+                "verCommand": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "commands/ver-command.cpp",
+            "line": 7,
+            "description": "Base abstract command class that acts like an interface\nfor all other commands to implement"
+        }
+    },
+    "classes": {
+        "Commander": {
+            "name": "Commander",
+            "shortname": "Commander",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "classes",
+            "file": "classes/commander.cpp",
+            "line": 11,
+            "description": "A (very) simple representation of an IOC container. Maps command names to\ncreator functions. \n\nExample of creator function:\n\n    class exampleCommand{\n        // Command logic\n        static Command *create(vector<string> args){\n            return new exampleCommand(args);\n        }\n    };\n\nRegistering the command with the IoC:\n\n    Commander commands;\n\n    commands.enable(\"example\", &exampleCommand::create);\n\nResolving the command later:\n\n    Command *exampleCmd = commands.resolve(\"example\", args);"
+        },
+        "FileOutput": {
+            "name": "FileOutput",
+            "shortname": "FileOutput",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "classes",
+            "namespace": "",
+            "file": "classes/file-output.cpp",
+            "line": 8,
+            "description": "Simple wrapper class that provides file output. Can be set to overwrite\nappend contents to a text file."
+        },
+        "Parser": {
+            "name": "Parser",
+            "shortname": "Parser",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "classes",
+            "namespace": "",
+            "file": "classes/parser.cpp",
+            "line": 18,
+            "description": "A class that takes a command block and parses it into a command name,\narguments, and output redirection"
+        },
+        "ShellError": {
+            "name": "ShellError",
+            "shortname": "ShellError",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "classes",
+            "namespace": "",
+            "file": "classes/shell-error.cpp",
+            "line": 7,
+            "description": "Simple error class that gets thrown way too often. Example:\n\n    throw ShellError('Error Name', 'Description of error');\n\nor just:\n\n    throw ShellError();"
+        },
+        "Command": {
+            "name": "Command",
+            "shortname": "Command",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "commands",
+            "namespace": "",
+            "file": "commands/base-command.cpp",
+            "line": 8,
+            "description": "Base abstract command class that acts like an interface\nfor all other commands to implement"
+        },
+        "cdCommand": {
+            "name": "cdCommand",
+            "shortname": "cdCommand",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "commands",
+            "namespace": "",
+            "file": "commands/cd-command.cpp",
+            "line": 13,
+            "description": "Command to change the current directory during shell execution",
+            "extends": "Command"
+        },
+        "changeNameCommand": {
+            "name": "changeNameCommand",
+            "shortname": "changeNameCommand",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "commands",
+            "namespace": "",
+            "file": "commands/change-name-command.cpp",
+            "line": 13,
+            "description": "Command to change the name of the shell prompt",
+            "extends": "Command"
+        },
+        "exitCommand": {
+            "name": "exitCommand",
+            "shortname": "exitCommand",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "commands",
+            "namespace": "",
+            "file": "commands/exit-command.cpp",
+            "line": 9,
+            "description": "Command to send an exit signal to the mysh shell",
+            "extends": "Command"
+        },
+        "ExternalCommand": {
+            "name": "ExternalCommand",
+            "shortname": "ExternalCommand",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "commands",
+            "namespace": "",
+            "file": "commands/external-command.cpp",
+            "line": 14,
+            "description": "ExternalCommand executes commands not built in shell"
+        },
+        "pwdCommand": {
+            "name": "pwdCommand",
+            "shortname": "pwdCommand",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "commands",
+            "namespace": "",
+            "file": "commands/pwd-command.cpp",
+            "line": 9,
+            "description": "Command to print the path of the current working directory",
+            "extends": "Command"
+        },
+        "verCommand": {
+            "name": "verCommand",
+            "shortname": "verCommand",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "commands",
+            "namespace": "",
+            "file": "commands/ver-command.cpp",
+            "line": 7,
+            "description": "Command to print the current version of mysh",
+            "extends": "Command"
+        }
+    },
+    "classitems": [
+        {
+            "file": "classes/commander.cpp",
+            "line": 40,
+            "description": "Internal map of command names to constructors",
+            "itemtype": "property",
+            "name": "map",
+            "type": "Map<string, Command function>",
+            "access": "private",
+            "tagname": "",
+            "class": "Commander",
+            "module": "classes"
+        },
+        {
+            "file": "classes/commander.cpp",
+            "line": 48,
+            "description": "Method to register a constructor and a command name with the Commander IOC",
+            "itemtype": "method",
+            "name": "enable",
+            "params": [
+                {
+                    "name": "cmdName",
+                    "description": "The name of the command that is being registered",
+                    "type": "String"
+                },
+                {
+                    "name": "creator",
+                    "description": "The constructor function that creates \nthe command",
+                    "type": "Command Returning Function"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Null"
+            },
+            "class": "Commander",
+            "module": "classes"
+        },
+        {
+            "file": "classes/commander.cpp",
+            "line": 61,
+            "description": "Method to resolve a command from the command IOC. If the command is not found,\nit returns an external command.",
+            "itemtype": "method",
+            "name": "resolve",
+            "params": [
+                {
+                    "name": "cmdName",
+                    "description": "The name of the command to resolve",
+                    "type": "String"
+                },
+                {
+                    "name": "args",
+                    "description": "Vector string of the arguments to supply to the command",
+                    "type": "Vector<string>"
+                }
+            ],
+            "return": {
+                "description": "command Pointer to the resolved command",
+                "type": "*Command"
+            },
+            "class": "Commander",
+            "module": "classes"
+        },
+        {
+            "file": "classes/file-output.cpp",
+            "line": 18,
+            "description": "The name of the output file",
+            "itemtype": "property",
+            "name": "outf",
+            "type": "String",
+            "class": "FileOutput",
+            "module": "classes"
+        },
+        {
+            "file": "classes/file-output.cpp",
+            "line": 25,
+            "description": "Determines rather output should append or overwrite output file's contents",
+            "itemtype": "property",
+            "name": "append",
+            "type": "Boolean",
+            "class": "FileOutput",
+            "module": "classes"
+        },
+        {
+            "file": "classes/file-output.cpp",
+            "line": 32,
+            "description": "Instantiates the FileOutput class",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "outputFile",
+                    "description": "The name of the output file",
+                    "type": "String"
+                },
+                {
+                    "name": "appendOutputToFile",
+                    "description": "Whether output should be appended or not",
+                    "type": "Bool"
+                }
+            ],
+            "class": "FileOutput",
+            "module": "classes"
+        },
+        {
+            "file": "classes/file-output.cpp",
+            "line": 44,
+            "description": "Method to cause the write operation",
+            "itemtype": "method",
+            "name": "write",
+            "params": [
+                {
+                    "name": "output",
+                    "description": "The output string to write to the file",
+                    "type": "String"
+                }
+            ],
+            "class": "FileOutput",
+            "module": "classes"
+        },
+        {
+            "file": "classes/parser.cpp",
+            "line": 27,
+            "description": "The entire line entered at the shell",
+            "itemtype": "property",
+            "name": "cmdBlock",
+            "type": "String",
+            "access": "private",
+            "tagname": "",
+            "class": "Parser",
+            "module": "classes"
+        },
+        {
+            "file": "classes/parser.cpp",
+            "line": 35,
+            "description": "Parsed name of the command",
+            "itemtype": "property",
+            "name": "cmdName",
+            "type": "String",
+            "access": "private",
+            "tagname": "",
+            "class": "Parser",
+            "module": "classes"
+        },
+        {
+            "file": "classes/parser.cpp",
+            "line": 43,
+            "description": "Parsed list of the command's arguments",
+            "itemtype": "property",
+            "name": "cmdArgs",
+            "type": "Vector<string>",
+            "access": "private",
+            "tagname": "",
+            "class": "Parser",
+            "module": "classes"
+        },
+        {
+            "file": "classes/parser.cpp",
+            "line": 51,
+            "description": "Queue of each 'word' in the command block",
+            "itemtype": "property",
+            "name": "cmdQueue",
+            "type": "Queue<string>",
+            "access": "private",
+            "tagname": "",
+            "class": "Parser",
+            "module": "classes"
+        },
+        {
+            "file": "classes/parser.cpp",
+            "line": 59,
+            "description": "Flag determining whether the parser should keep resolving the queue",
+            "itemtype": "property",
+            "name": "keepResolving",
+            "type": "Boolean",
+            "access": "private",
+            "tagname": "",
+            "class": "Parser",
+            "module": "classes"
+        },
+        {
+            "file": "classes/parser.cpp",
+            "line": 67,
+            "description": "Method to resolve the qeueue, separating out flags, arguments, command\nnames, and operators",
+            "itemtype": "method",
+            "name": "resolveQueue",
+            "access": "private",
+            "tagname": "",
+            "class": "Parser",
+            "module": "classes"
+        },
+        {
+            "file": "classes/parser.cpp",
+            "line": 106,
+            "description": "Uses the command name to resolve a command from the IoC container",
+            "itemtype": "method",
+            "name": "resolveCommand",
+            "access": "private",
+            "tagname": "",
+            "class": "Parser",
+            "module": "classes"
+        },
+        {
+            "file": "classes/parser.cpp",
+            "line": 117,
+            "description": "The resolved command",
+            "itemtype": "property",
+            "name": "command",
+            "type": "Command",
+            "class": "Parser",
+            "module": "classes"
+        },
+        {
+            "file": "classes/parser.cpp",
+            "line": 124,
+            "description": "Determine whether or not the command is a redirection",
+            "itemtype": "property",
+            "name": "isRedirect",
+            "type": "Boolean",
+            "class": "Parser",
+            "module": "classes"
+        },
+        {
+            "file": "classes/parser.cpp",
+            "line": 131,
+            "description": "Determine whether redirection output should append or overwrite file",
+            "itemtype": "property",
+            "name": "append",
+            "type": "Boolean",
+            "class": "Parser",
+            "module": "classes"
+        },
+        {
+            "file": "classes/parser.cpp",
+            "line": 138,
+            "description": "Name of the file to redirect output to",
+            "itemtype": "property",
+            "name": "outputFile",
+            "type": "String",
+            "class": "Parser",
+            "module": "classes"
+        },
+        {
+            "file": "classes/parser.cpp",
+            "line": 145,
+            "description": "Instantiates a new parser given a string that represents a full\ncommand block",
+            "itemtype": "method",
+            "name": "Parser",
+            "params": [
+                {
+                    "name": "cmdBlock",
+                    "description": "The commnad block to be parsed out",
+                    "type": "String"
+                }
+            ],
+            "is_constructor": 1,
+            "class": "Parser",
+            "module": "classes"
+        },
+        {
+            "file": "classes/shell-error.cpp",
+            "line": 22,
+            "description": "The name of the error",
+            "itemtype": "property",
+            "name": "name",
+            "type": "String",
+            "class": "ShellError",
+            "module": "classes"
+        },
+        {
+            "file": "classes/shell-error.cpp",
+            "line": 29,
+            "description": "The error message",
+            "itemtype": "property",
+            "name": "message",
+            "type": "Message",
+            "class": "ShellError",
+            "module": "classes"
+        },
+        {
+            "file": "classes/shell-error.cpp",
+            "line": 36,
+            "description": "Simple constructor that sets a default error name and message",
+            "is_constructor": 1,
+            "class": "ShellError",
+            "module": "classes"
+        },
+        {
+            "file": "classes/shell-error.cpp",
+            "line": 46,
+            "description": "Still simple constructor that lets you set a name and message",
+            "params": [
+                {
+                    "name": "errorName",
+                    "description": "The name of the error",
+                    "type": "String"
+                },
+                {
+                    "name": "errorMessage",
+                    "description": "A description of the error",
+                    "type": "String"
+                }
+            ],
+            "class": "ShellError",
+            "module": "classes"
+        },
+        {
+            "file": "commands/base-command.cpp",
+            "line": 18,
+            "description": "The list of arguments supplied to the command",
+            "itemtype": "property",
+            "name": "arguments",
+            "type": "Vector<string>",
+            "class": "Command",
+            "module": "commands"
+        },
+        {
+            "file": "commands/base-command.cpp",
+            "line": 25,
+            "description": "Commands can send an exit signal to the shell by setting\nthis value to true.",
+            "itemtype": "property",
+            "name": "shouldExit",
+            "type": "Boolean",
+            "class": "Command",
+            "module": "commands"
+        },
+        {
+            "file": "commands/base-command.cpp",
+            "line": 33,
+            "description": "Instantiates a base command",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "args",
+                    "description": "The list of arguments supplied to the command",
+                    "type": "Vector<string>"
+                }
+            ],
+            "class": "Command",
+            "module": "commands"
+        },
+        {
+            "file": "commands/base-command.cpp",
+            "line": 44,
+            "description": "Method where command logic is imlemented.",
+            "itemtype": "method",
+            "name": "execute",
+            "return": {
+                "description": "output The output of the command",
+                "type": "String"
+            },
+            "class": "Command",
+            "module": "commands"
+        },
+        {
+            "file": "commands/external-command.cpp",
+            "line": 21,
+            "description": "Contructor",
+            "params": [
+                {
+                    "name": "cmd",
+                    "description": "command name",
+                    "type": "String"
+                },
+                {
+                    "name": "args",
+                    "description": "arguments in the command",
+                    "type": "Vector<string>"
+                },
+                {
+                    "name": "flags",
+                    "description": "flags in the command",
+                    "type": "Vector<char>"
+                }
+            ],
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "",
+                "type": "Null"
+            },
+            "class": "ExternalCommand",
+            "module": "commands"
+        },
+        {
+            "file": "commands/external-command.cpp",
+            "line": 37,
+            "description": "execute() method inherited from Command\nCalls internal method executeCommand",
+            "access": "public",
+            "tagname": "",
+            "return": {
+                "description": "",
+                "type": "Null"
+            },
+            "class": "ExternalCommand",
+            "module": "commands"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type\nInstantiates the FileOutput class",
+            "line": " classes/file-output.cpp:32"
+        },
+        {
+            "message": "Missing item type\nSimple constructor that sets a default error name and message",
+            "line": " classes/shell-error.cpp:36"
+        },
+        {
+            "message": "Missing item type\nStill simple constructor that lets you set a name and message",
+            "line": " classes/shell-error.cpp:46"
+        },
+        {
+            "message": "Missing item type\nInstantiates a base command",
+            "line": " commands/base-command.cpp:33"
+        },
+        {
+            "message": "Missing item type\nContructor",
+            "line": " commands/external-command.cpp:21"
+        },
+        {
+            "message": "Missing item type\nexecute() method inherited from Command\nCalls internal method executeCommand",
+            "line": " commands/external-command.cpp:37"
+        }
+    ]
+}
