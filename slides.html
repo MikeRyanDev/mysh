@@ -196,7 +196,7 @@ public:
   <li>Software requirements for mysh only required one error</li>
 </ul>
 
-<h4>Logic in SomeCommand's <code>execute</code> method</h4>
+<h5 style="padding-top:20px;">Logic in SomeCommand's execute method</h5>
 <pre><code class="cpp">
 if(this->arguments.empty())
 {
@@ -204,7 +204,7 @@ if(this->arguments.empty())
 }
 </code></pre>
 
-<h4>Executing SomeCommand</h4>
+<h5>Executing SomeCommand</h5>
 <pre><code class="cpp">
 try{
   cout << someCmd.execute();
@@ -214,7 +214,7 @@ catch(const ShellError& executionError){
 }
 </code></pre>
 
-Output: <code>Argument not provided: One argument is required to execute SomeCommand</code>
+<p style="font-size:0.6em"><span style="padding-right:14px">Output: <span><code>Argument not provided: One argument is required to execute SomeCommand</code></p>
 
         </section>
       </section>
@@ -253,7 +253,7 @@ Output: <code>Argument not provided: One argument is required to execute SomeCom
 <h3>Documentation Comment Blocks</h3>
 <ul>
   <li>In our source code, we annotate our classes with documentation blocks</li>
-  <li>Using a third party parser (in this case Yuidoc, developed at Yahoo) documentation is generated from the source code</li>
+  <li>Using a third party parser, documentation is generated from the source code</li>
   <li>Documentation generation process automated via our makefile</li>
 </ul>
 
