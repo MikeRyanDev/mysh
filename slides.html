@@ -125,10 +125,10 @@ int main(){
 <pre><code data-tim class="cpp">
 class Command{
 public:
-  vector<string> arguments;
+  vector&lt;string&#62; arguments;
   bool shouldExit;
   
-  Command( vector<string> args ){
+  Command( vector&lt;string&#62; args ){
     this->arguments = args;
     this->shouldExit = false;
   }
@@ -245,18 +245,18 @@ class Demo{
   /**
   * Property description
   *
-  * @property {vector<string>} arguments
+  * @property {vector&lt;string&#62;} arguments
   */
-  vector<string> arguments;
+  vector&lt;string&#62; arguments;
 
   /**
   * Method description
   *
   * @method simpleMethod
-  * @param {vector<string>} arguments Description of paramter
+  * @param {vector&lt;string&#62;} arguments Description of paramter
   * @return {bool} Description of the return value
   */
-  bool simpleMethod( vector<string> arguments ){ }
+  bool simpleMethod( vector&lt;string&#62; arguments ){ }
 }
 </code></pre>
           </section>
