@@ -67,7 +67,7 @@
   <li>Registering commands is really simple:</li>
 </ul>
 
-<pre><code data-tim class="cpp">
+<pre><code data-trim class="cpp">
 class MyCommand : Command { /* Class Logic */ }
 Commander commands();
 
@@ -125,7 +125,7 @@ int main(){
   <li>Requires an execute method that returns the output as a string</li>
   <li>Returning a string simplifies our output redirection process</li>
 </ul>
-<pre><code data-tim class="cpp">
+<pre><code data-trim class="cpp">
 class Command{
 public:
   vector&lt;string&#62; arguments;
@@ -197,7 +197,7 @@ public:
 </ul>
 
 <h5 style="padding-top:20px;">Logic in SomeCommand's execute method</h5>
-<pre><code class="cpp">
+<pre><code class="cpp" data-trim>
 if(this->arguments.empty())
 {
   throw ShellError("Argument not provided", "One argument is required to execute SomeCommand");
@@ -205,7 +205,7 @@ if(this->arguments.empty())
 </code></pre>
 
 <h5>Executing SomeCommand</h5>
-<pre><code class="cpp">
+<pre><code class="cpp" data-trim>
 try{
   cout << someCmd.execute();
 }
@@ -214,7 +214,7 @@ catch(const ShellError& executionError){
 }
 </code></pre>
 
-<p style="font-size:0.6em"><span style="padding-right:14px">Output: <span><code>Argument not provided: One argument is required to execute SomeCommand</code></p>
+<p style="font-size:0.6em"><span style="padding-right:14px">Output: </span><code>Argument not provided: One argument is required to execute SomeCommand</code></p>
 
         </section>
       </section>
@@ -257,7 +257,7 @@ catch(const ShellError& executionError){
   <li>Documentation generation process automated via our makefile</li>
 </ul>
 
-<pre><code data-tim class="cpp">
+<pre><code data-trim class="cpp">
 /**
 * Demo class description
 *
