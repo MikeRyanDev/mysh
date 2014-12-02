@@ -266,13 +266,9 @@ class Demo{
 
   <script type="text/javascript">
 Reveal.initialize({// Transition style
-    transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
-    dependencies: [
-        // Syntax highlight for <code> elements
-        { src: '//cdnjs.cloudflare.com/ajax/libs/reveal.js/2.6.2/plugin/highlight/highlight.js', callback: function() { hljs.initHighlightingOnLoad(); } }
-
-    ]
+    transition: 'linear'
 });
+hljs.initHighlightingOnLoad();
   </script>
   </body>
 </html>
